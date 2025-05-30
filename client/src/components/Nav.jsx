@@ -36,6 +36,8 @@ import { Link } from "react-router-dom";
 
 import classes from "./Nav.module.scss";
 
+import logo from "../assets/sanji.png";
+
 const mockdata = [
   {
     icon: IconCode,
@@ -117,7 +119,10 @@ const Nav = () => {
             position: "relative",
           }}
         >
-          {/*<MantineLogo size={30} />*/}
+          <div className="flex items-center gap-2">
+            <img src={logo} className="h-14" />
+            <p className="text-4xl font-bold">BeliBites</p>
+          </div>
 
           <Group
             h="100%"
