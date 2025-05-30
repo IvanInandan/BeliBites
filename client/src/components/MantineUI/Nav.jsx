@@ -36,7 +36,8 @@ import { Link } from "react-router-dom";
 
 import classes from "./Nav.module.scss";
 
-import logo from "../assets/sanji.png";
+import Authentication from "./Authentication";
+import logo from "../../assets/sanji.png";
 
 const mockdata = [
   {
@@ -193,12 +194,8 @@ const Nav = () => {
               About
             </a>
 
-            <a onClick={() => scrollTo("faq")} className={classes.link}>
-              Faq
-            </a>
-
-            <a onClick={() => scrollTo("contact")} className={classes.link}>
-              Contact
+            <a onClick={() => scrollTo("recipes")} className={classes.link}>
+              Recipes
             </a>
           </Group>
 
@@ -246,7 +243,7 @@ const Nav = () => {
               onClose={close}
               centered
             >
-              {/* Place login component window here */}
+              <Authentication />
             </Modal>
 
             <Button variant="default" onClick={open}>

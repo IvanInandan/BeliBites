@@ -1,4 +1,6 @@
-import Nav from "./Nav";
+import Nav from "./MantineUI/Nav";
+import About from "./About";
+import Recipes from "./Recipes";
 
 const Home = () => {
   return (
@@ -16,14 +18,14 @@ const Home = () => {
         id="about"
         className="h-screen w-screen flex justify-center items-center bg-red-500"
       >
-        <div className="text-7xl">About</div>
+        <About />
       </section>
 
       <section
-        id="contact"
+        id="recipes"
         className="h-screen w-screen flex justify-center items-center bg-blue-500"
       >
-        <div className="text-7xl">Contact</div>
+        <Recipes />
       </section>
     </div>
   );
