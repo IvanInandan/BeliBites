@@ -1,6 +1,6 @@
 const app = require("./app");
 const config = require("./utils/config");
-const logger = reqyure("./utils/logger')");
+const logger = require("./utils/logger");
 
 app.listen(config.PORT, () => {
   logger.info(`index.js -- server running on port ${config.PORT}`);
