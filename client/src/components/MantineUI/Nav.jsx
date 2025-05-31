@@ -36,7 +36,8 @@ import { Link } from "react-router-dom";
 
 import classes from "./Nav.module.scss";
 
-import Authentication from "./Authentication";
+import Login from "./Login";
+import Register from "./Register";
 import logo from "../../assets/sanji.png";
 
 const mockdata = [
@@ -78,7 +79,10 @@ const Nav = () => {
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
 
-  const [opened, { open, close }] = useDisclosure(false);
+  const [loginOpened, { open: openLogin, close: closeLogin }] =
+    useDisclosure(false);
+  const [registerOpened, { open: openRegister, close: closeRegister }] =
+    useDisclosure(false);
 
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const theme = useMantineTheme();
@@ -218,7 +222,7 @@ const Nav = () => {
 
             <Modal
               classNames={{
-                content: classes.loginWindow,
+                content: classes.modalWindow,
               }}
               styles={{
                 header: {
@@ -239,20 +243,71 @@ const Nav = () => {
                 },
               }}
               size="md"
-              opened={opened}
-              onClose={close}
+              opened={loginOpened}
+              onClose={closeLogin}
               centered
             >
-              <Authentication />
+              <Login
+                switchRegister={() => {
+                  closeLogin();
+                  openRegister();
+                }}
+              />
             </Modal>
 
-            <Button variant="default" onClick={open}>
+            <Button
+              variant="default"
+              onClick={() => {
+                closeRegister();
+                openLogin();
+              }}
+            >
               Log in
             </Button>
 
-            <Link to="/register">
-              <Button>Sign up</Button>
-            </Link>
+            <Modal
+              classNames={{
+                content: classes.modalWindow,
+              }}
+              styles={{
+                header: {
+                  padding: 0,
+                  margin: 0,
+                  height: 0,
+                  minHeight: 0,
+                },
+                title: {
+                  display: "none",
+                },
+              }}
+              closeButtonProps={{
+                style: {
+                  top: 10,
+                  right: 10,
+                  position: "absolute",
+                },
+              }}
+              size="md"
+              opened={registerOpened}
+              onClose={closeRegister}
+              centered
+            >
+              <Register
+                switchLogin={() => {
+                  closeRegister();
+                  openLogin();
+                }}
+              />
+            </Modal>
+
+            <Button
+              onClick={() => {
+                closeLogin();
+                openRegister();
+              }}
+            >
+              Sign up
+            </Button>
           </Group>
 
           <Burger

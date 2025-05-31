@@ -7,12 +7,11 @@
   background-color: transparent;
   color: #333;
   padding: 10px 10px;
-  cursor: pointer;
+
   transition: all 0.3s ease;
 }
 
 .toggleTheme:hover {
-  cursor: pointer;
   color: #fff;
 }
 

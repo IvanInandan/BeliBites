@@ -10,7 +10,7 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
-import classes from "./Authentication.module.scss";
+import classes from "./Login.module.scss";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 //import { useDispatch } from "react-redux";
 //import { toast } from "react-toastify";
 
-const Authentication = () => {
+const Login = ({ switchRegister }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -58,7 +58,7 @@ const Authentication = () => {
       </Title>
       <Text c="dimmed" size="sm" ta="center" mt={5}>
         Do not have an account yet?{" "}
-        <Anchor href="/register" size="sm" component="a">
+        <Anchor onClick={switchRegister} size="sm" component="a">
           Create account
         </Anchor>
       </Text>
@@ -93,4 +93,4 @@ const Authentication = () => {
   );
 };
 
-export default Authentication;
+export default Login;
