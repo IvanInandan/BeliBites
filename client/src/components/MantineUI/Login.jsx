@@ -56,14 +56,8 @@ const Login = ({ switchRegister }) => {
       <Title ta="center" className={classes.title}>
         Welcome back!
       </Title>
-      <Text c="dimmed" size="sm" ta="center" mt={5}>
-        Do not have an account yet?{" "}
-        <Anchor onClick={switchRegister} size="sm" component="a">
-          Create account
-        </Anchor>
-      </Text>
 
-      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+      <Paper withBorder shadow="md" p={30} mt={30} mb={30} radius="md">
         <TextInput
           label="Email"
           placeholder="sanji@yeszeff.dev"
@@ -89,6 +83,13 @@ const Login = ({ switchRegister }) => {
           Sign in
         </Button>
       </Paper>
+
+      <Text c="dimmed" size="sm" ta="center" mt={5}>
+        Do not have an account yet?{" "}
+        <Anchor onClick={switchRegister} size="sm" component="a">
+          Create account
+        </Anchor>
+      </Text>
     </Container>
   );
 };
