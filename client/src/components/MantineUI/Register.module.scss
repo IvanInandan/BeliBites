@@ -2,3 +2,15 @@
   font-family: Greycliff CF, var(--mantine-font-family);
   font-weight: 900;
 }
+
+.invalid {
+  background-color: var(--mantine-color-red-light);
+}
+
+.valid {
+  background-color: var(--mantine-color-red-light);
+}
+
+.icon {
+  color: light-dark(var(--mantine-color-red-6), var(--mantine-color-red-7));
+}
