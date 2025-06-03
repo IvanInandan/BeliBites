@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const middleware = require("./utils/middleware");
 
+const userRouter = require("./controllers/user");
+
 const app = express();
 
 app.use(cors()); // Allows your port (server) to be reached by other ports (front-end, other users, etc)
@@ -11,6 +13,7 @@ app.use(middleware.requestLogger); // Print request to console BEFORE sending
 // Implement token extractor below
 
 // Implement routers below
+app.use("/api/users", userRouter);
 
 // Middlewares executed after requests
 app.use(middleware.unknownEndpoint);
