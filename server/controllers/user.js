@@ -2,7 +2,8 @@ const userRouter = require("express").Router();
 
 userRouter.post("/", async (request, response, next) => {
   try {
-    console.log("Register receieved");
+    const user = request.body;
+    return response.status(201).json(user);
   } catch (error) {
     next(error);
   }

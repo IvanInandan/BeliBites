@@ -3,7 +3,7 @@ const baseUrl = "/api/users";
 
 const createUser = async (credentials) => {
   const response = await axios.post(baseUrl, credentials);
-  return;
+  return response.data;
 };
 
 export { createUser };

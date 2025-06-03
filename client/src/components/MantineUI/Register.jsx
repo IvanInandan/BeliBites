@@ -34,12 +34,13 @@ const Register = ({ switchLogin }) => {
   const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
   const showEmailError = emailTouched && email.length > 0 && !isValidEmail;
 
-  const registerUser = (event) => {
+  const registerUser = async (event) => {
     event.preventDefault();
 
     if (!isValidEmail || !isPasswordValid || !passwordMatch) return;
 
-    createUser({ username, email, password });
+    const response = await createUser({ username, email, password });
+    console.log(response);
 
     // Reset fields
     setUsername("");
@@ -125,7 +126,7 @@ const Register = ({ switchLogin }) => {
           mt="md"
         />
 
-        <Button onClick={() => registerUser(event)} fullWidth mt="xl">
+        <Button onClick={registerUser} fullWidth mt="xl">
           Register
         </Button>
       </Paper>
