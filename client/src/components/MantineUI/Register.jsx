@@ -14,6 +14,7 @@ import {
 import { IconAlertTriangle, IconCheck } from "@tabler/icons-react";
 import classes from "./Login.module.scss";
 import { PasswordStrength } from "./PasswordStrength";
+import { createUser } from "../../services/user";
 
 const Register = ({ switchLogin }) => {
   const [username, setUsername] = useState("");
@@ -33,10 +34,12 @@ const Register = ({ switchLogin }) => {
   const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
   const showEmailError = emailTouched && email.length > 0 && !isValidEmail;
 
-  const createUser = (event) => {
+  const registerUser = (event) => {
     event.preventDefault();
 
     if (!isValidEmail || !isPasswordValid || !passwordMatch) return;
+
+    createUser({ username, email, password });
 
     // Reset fields
     setUsername("");
@@ -122,7 +125,7 @@ const Register = ({ switchLogin }) => {
           mt="md"
         />
 
-        <Button onClick={() => createUser(event)} fullWidth mt="xl">
+        <Button onClick={() => registerUser(event)} fullWidth mt="xl">
           Register
         </Button>
       </Paper>
