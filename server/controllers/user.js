@@ -1,3 +1,5 @@
+const bcrypt = require("bcryptjs");
+
 const userRouter = require("express").Router();
 
 userRouter.get("/", async (request, response, next) => {
