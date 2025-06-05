@@ -47,7 +47,15 @@ const Register = ({ switchLogin }) => {
   const registerUser = async (event) => {
     event.preventDefault();
 
-    if (!isValidEmail || !isPasswordValid || !passwordMatch) {
+    if (
+      !isUserUnique ||
+      !isEmailUnique ||
+      !isValidEmail ||
+      !isPasswordValid ||
+      !passwordMatch
+    ) {
+      if (!isUserUnique) toast.error(`Username '${username}' already exists`);
+      if (!isEmailUnique) toast.error(`Email '${email}' already exists`);
       if (!isValidEmail) toast.error("Invalid email format");
       if (!isPasswordValid) toast.error("Password does not meet requirements");
       if (!passwordMatch) toast.error("Passwords do not match");
