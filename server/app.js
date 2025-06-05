@@ -1,8 +1,12 @@
-const express = require("express");
-const cors = require("cors");
+// Import utils
 const middleware = require("./utils/middleware");
 
+// Import controllers
 const userRouter = require("./controllers/user");
+
+// Import libraries
+const express = require("express");
+const cors = require("cors");
 
 const app = express();
 
