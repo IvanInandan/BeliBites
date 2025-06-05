@@ -1,9 +1,11 @@
 import { login } from "../services/auth";
-import { searchUser } from "../services/user";
+import { searchUser, searchEmail } from "../services/user";
 
 const handleLogin = async (username, password) => {
   try {
     const user = await login({ username, password });
+    console.log(user);
+
     return true;
   } catch (error) {
     console.log(error);
@@ -14,17 +16,15 @@ const handleLogin = async (username, password) => {
 const checkUsernameUnique = async (username) => {
   const { unique } = await searchUser(username);
 
-  if (unique === "true") {
-    console.log("unique");
-    return true;
-  } else {
-    console.log("not unique");
-    return false;
-  }
+  if (unique === "true") return true;
+  else return false;
 };
 
 const checkEmailUnique = async (email) => {
-  return false;
+  const { unique } = await searchEmail(email);
+
+  if (unique === "true") return true;
+  else return false;
 };
 
 export { handleLogin, checkUsernameUnique, checkEmailUnique };

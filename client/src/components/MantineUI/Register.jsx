@@ -37,9 +37,11 @@ const Register = ({ switchLogin }) => {
 
   // For email validation
   const [email, setEmail] = useState("");
+  const [isEmailUnique, setIsEmailUnique] = useState(false);
   const [emailTouched, setEmailTouched] = useState(false);
   const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
-  const showEmailError = emailTouched && email.length > 0 && !isValidEmail;
+  const showEmailError =
+    emailTouched && email.length > 0 && (!isValidEmail || !isEmailUnique);
 
   const registerUser = async (event) => {
     event.preventDefault();
@@ -77,8 +79,8 @@ const Register = ({ switchLogin }) => {
           onChange={(event) => setUsername(event.target.value)}
           onBlur={async () => {
             setUserTouched(true);
-            const result = await checkUsernameUnique(username);
-            setIsUserUnique(result);
+            const usernameResult = await checkUsernameUnique(username);
+            setIsUserUnique(usernameResult);
           }}
           error={showUserError ? "Username is not unique" : false}
           classNames={{
@@ -105,21 +107,25 @@ const Register = ({ switchLogin }) => {
           placeholder="sanji@yeszeff.com"
           value={email}
           onChange={(event) => setEmail(event.currentTarget.value)}
-          onBlur={() => {
+          onBlur={async () => {
             setEmailTouched(true);
-            checkEmailUnique(email);
+            if (isValidEmail) {
+              const emailResult = await checkEmailUnique(email);
+              setIsEmailUnique(emailResult);
+              console.log(isEmailUnique);
+            }
           }} // triggers validation when focus is lost
           error={showEmailError ? "Invalid email" : false}
           classNames={{
             input: emailTouched
-              ? isValidEmail
+              ? isEmailUnique
                 ? classes.valid
                 : classes.invalid
               : undefined,
           }}
           rightSection={
             emailTouched && email.length > 0 ? (
-              isValidEmail ? (
+              isValidEmail && isEmailUnique ? (
                 <IconCheck size={18} stroke={1.5} color="green" />
               ) : (
                 <IconAlertTriangle size={18} stroke={1.5} color="red" />
