@@ -28,8 +28,6 @@ const Login = ({ switchRegister }) => {
 
   const login = async (event) => {
     event.preventDefault();
-    console.log("User: ", username);
-    console.log("Pass: ", password);
 
     const loginSuccess = await handleLogin(username, password);
 
