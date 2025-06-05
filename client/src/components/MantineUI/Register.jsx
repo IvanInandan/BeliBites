@@ -33,7 +33,7 @@ const Register = ({ switchLogin, closeRegister }) => {
   const [passwordTouched, setPasswordTouched] = useState(false);
   const passwordMatch = password === confirmPassword ? true : false;
   const showPasswordError =
-    passwordTouched && confirmPassword.length > 6 && !passwordMatch;
+    passwordTouched && confirmPassword.length > 0 && !passwordMatch;
 
   // For email validation
   const [email, setEmail] = useState("");
@@ -83,7 +83,18 @@ const Register = ({ switchLogin, closeRegister }) => {
         Register with us!
       </Title>
 
-      <Paper withBorder shadow="md" p={30} mt={30} mb={30} radius="md">
+      <Paper
+        withBorder
+        shadow="md"
+        p={30}
+        mt={30}
+        mb={30}
+        radius="md"
+        style={{
+          maxHeight: "50vh", // limits modal content height
+          overflowY: "auto", // enables scrolling if it overflows
+        }}
+      >
         <TextInput
           className="pb-3"
           label="Username"
@@ -177,7 +188,7 @@ const Register = ({ switchLogin, closeRegister }) => {
           }}
           rightSection={
             passwordTouched ? (
-              passwordMatch ? (
+              showPasswordError && passwordMatch ? (
                 <IconCheck size={18} stroke={1.5} color="green" />
               ) : (
                 <IconAlertTriangle size={18} stroke={1.5} color="red" />
