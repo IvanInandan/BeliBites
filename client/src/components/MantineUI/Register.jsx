@@ -24,7 +24,7 @@ const Register = ({ switchLogin }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   // For user validation
-  const [isUserUnique, setIsUserUnique] = useState(false);
+  const [isUserUnique, setIsUserUnique] = useState(true);
   const [userTouched, setUserTouched] = useState(false);
   const showUserError = userTouched && username.length > 3 && !isUserUnique;
 
@@ -37,11 +37,12 @@ const Register = ({ switchLogin }) => {
 
   // For email validation
   const [email, setEmail] = useState("");
-  const [isEmailUnique, setIsEmailUnique] = useState(false);
+  const [isEmailUnique, setIsEmailUnique] = useState(true);
   const [emailTouched, setEmailTouched] = useState(false);
   const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
-  const showEmailError =
-    emailTouched && email.length > 0 && (!isValidEmail || !isEmailUnique);
+  const invalidEmailError = emailTouched && email.length > 0 && !isValidEmail;
+  const uniqueEmailError = emailTouched && email.length > 0 && !isEmailUnique;
+  console.log(uniqueEmailError);
 
   const registerUser = async (event) => {
     event.preventDefault();
@@ -112,10 +113,15 @@ const Register = ({ switchLogin }) => {
             if (isValidEmail) {
               const emailResult = await checkEmailUnique(email);
               setIsEmailUnique(emailResult);
-              console.log(isEmailUnique);
             }
           }} // triggers validation when focus is lost
-          error={showEmailError ? "Invalid email" : false}
+          error={
+            invalidEmailError
+              ? "Invalid email"
+              : uniqueEmailError
+              ? "Email already exists in system"
+              : false
+          }
           classNames={{
             input: emailTouched
               ? isEmailUnique
