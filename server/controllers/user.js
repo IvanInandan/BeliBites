@@ -1,7 +1,16 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
+const { request } = require("express");
 
 const userRouter = require("express").Router();
+
+userRouter.get("/check-username", async (request, response, next) => {
+  const { username } = request.query;
+  const users = await User.find({ username });
+
+  if (users.length < 1) return response.status(200).json({ unique: "true" });
+  else return response.status(200).json({ unique: "false" });
+});
 
 userRouter.get("/", async (request, response, next) => {
   try {

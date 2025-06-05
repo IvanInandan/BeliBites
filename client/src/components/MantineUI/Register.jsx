@@ -26,14 +26,14 @@ const Register = ({ switchLogin }) => {
   // For user validation
   const [isUserUnique, setIsUserUnique] = useState(false);
   const [userTouched, setUserTouched] = useState(false);
-  const showUserError = userTouched && username.length > 0 && !isUserUnique;
+  const showUserError = userTouched && username.length > 3 && !isUserUnique;
 
   // For password validation
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const passwordMatch = password === confirmPassword ? true : false;
   const showPasswordError =
-    passwordTouched && confirmPassword.length > 0 && !passwordMatch;
+    passwordTouched && confirmPassword.length > 6 && !passwordMatch;
 
   // For email validation
   const [email, setEmail] = useState("");
@@ -75,9 +75,10 @@ const Register = ({ switchLogin }) => {
           placeholder="Username"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
-          onBlur={() => {
+          onBlur={async () => {
             setUserTouched(true);
-            checkUsernameUnique(username);
+            const result = await checkUsernameUnique(username);
+            setIsUserUnique(result);
           }}
           error={showUserError ? "Username is not unique" : false}
           classNames={{
@@ -88,7 +89,7 @@ const Register = ({ switchLogin }) => {
               : undefined,
           }}
           rightSection={
-            userTouched ? (
+            userTouched && username.length > 0 ? (
               isUserUnique ? (
                 <IconCheck size={18} stroke={1.5} color="green" />
               ) : (
@@ -117,7 +118,7 @@ const Register = ({ switchLogin }) => {
               : undefined,
           }}
           rightSection={
-            emailTouched ? (
+            emailTouched && email.length > 0 ? (
               isValidEmail ? (
                 <IconCheck size={18} stroke={1.5} color="green" />
               ) : (

@@ -1,8 +1,9 @@
-import authService from "../services/auth";
+import { login } from "../services/auth";
+import { searchUser } from "../services/user";
 
 const handleLogin = async (username, password) => {
   try {
-    const user = await authService.login({ username, password });
+    const user = await login({ username, password });
     return true;
   } catch (error) {
     console.log(error);
@@ -11,7 +12,15 @@ const handleLogin = async (username, password) => {
 };
 
 const checkUsernameUnique = async (username) => {
-  return false;
+  const { unique } = await searchUser(username);
+
+  if (unique === "true") {
+    console.log("unique");
+    return true;
+  } else {
+    console.log("not unique");
+    return false;
+  }
 };
 
 const checkEmailUnique = async (email) => {
