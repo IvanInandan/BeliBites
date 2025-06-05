@@ -3,6 +3,7 @@ const middleware = require("./utils/middleware");
 
 // Import controllers
 const userRouter = require("./controllers/user");
+const loginRouter = require("./controllers/login");
 
 // Import libraries
 const express = require("express");
@@ -18,6 +19,7 @@ app.use(middleware.requestLogger); // Print request to console BEFORE sending
 
 // Implement routers below
 app.use("/api/users", userRouter);
+app.use("/api/login", loginRouter);
 
 // Middlewares executed after requests
 app.use(middleware.unknownEndpoint);

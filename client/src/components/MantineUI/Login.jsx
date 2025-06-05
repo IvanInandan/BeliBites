@@ -15,7 +15,7 @@ import classes from "./Login.module.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-//import { handleLogin, createUser } from "../../helper/authFuncs";
+import { handleLogin } from "../../helpers/authFuncs";
 //import { useDispatch } from "react-redux";
 //import { toast } from "react-toastify";
 
@@ -31,22 +31,20 @@ const Login = ({ switchRegister }) => {
     console.log("User: ", username);
     console.log("Pass: ", password);
 
-    /*
-    const loginSuccess = await handleLogin(dispatch, username, password);
+    const loginSuccess = await handleLogin(username, password);
 
     if (loginSuccess) {
-      navigate("/dashboard");
+      console.log("Login success!");
     } else {
-      toast.error("Login failed: Invalid username or password");
+      console.log("Login failure");
     }
-*/
 
     // Reset fields
     setUsername("");
     setPassword("");
   };
 
-  const resetPassword = () => {
+  const resetPassword = (event) => {
     event.preventDefault();
     console.log("Trigger password reset");
   };
@@ -59,8 +57,8 @@ const Login = ({ switchRegister }) => {
 
       <Paper withBorder shadow="md" p={30} mt={30} mb={30} radius="md">
         <TextInput
-          label="Email"
-          placeholder="sanji@yeszeff.dev"
+          label="Username"
+          placeholder="sanji"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
           required
@@ -75,7 +73,7 @@ const Login = ({ switchRegister }) => {
         />
         <Group justify="space-between" mt="lg">
           <Checkbox label="Remember me" />
-          <Anchor onClick={() => resetPassword()} component="button" size="sm">
+          <Anchor onClick={resetPassword} component="button" size="sm">
             Forgot password?
           </Anchor>
         </Group>
