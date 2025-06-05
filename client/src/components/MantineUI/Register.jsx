@@ -40,7 +40,7 @@ const Register = ({ switchLogin }) => {
     if (!isValidEmail || !isPasswordValid || !passwordMatch) return;
 
     const response = await createUser({ username, email, password });
-    console.log(response);
+    console.log("hello");
 
     // Reset fields
     setUsername("");
