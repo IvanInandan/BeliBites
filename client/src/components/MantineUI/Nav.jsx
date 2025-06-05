@@ -297,6 +297,7 @@ const Nav = () => {
                   closeRegister();
                   openLogin();
                 }}
+                closeRegister={closeRegister}
               />
             </Modal>
 

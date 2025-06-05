@@ -18,7 +18,7 @@ import { PasswordStrength } from "./PasswordStrength";
 import { createUser } from "../../services/user";
 import { checkUsernameUnique, checkEmailUnique } from "../../helpers/authFuncs";
 
-const Register = ({ switchLogin }) => {
+const Register = ({ switchLogin, closeRegister }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -42,7 +42,6 @@ const Register = ({ switchLogin }) => {
   const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
   const invalidEmailError = emailTouched && email.length > 0 && !isValidEmail;
   const uniqueEmailError = emailTouched && email.length > 0 && !isEmailUnique;
-  console.log(uniqueEmailError);
 
   const registerUser = async (event) => {
     event.preventDefault();
@@ -71,6 +70,11 @@ const Register = ({ switchLogin }) => {
     setEmail("");
     setPassword("");
     setConfirmPassword("");
+
+    closeRegister();
+    toast.success(
+      `User ${username} has been successfully created! An email has been sent out to ${email}`
+    );
   };
 
   return (
