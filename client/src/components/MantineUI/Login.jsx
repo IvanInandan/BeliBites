@@ -14,6 +14,7 @@ import classes from "./Login.module.scss";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { handleLogin } from "../../helpers/authFuncs";
 
@@ -31,7 +32,7 @@ const Login = ({ switchRegister }) => {
     if (loginSuccess) {
       navigate("/dashboard");
     } else {
-      console.log("Login failure");
+      toast.error("Login failed: Invalid username or password");
     }
 
     // Reset fields

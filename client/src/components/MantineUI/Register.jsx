@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import {
   Anchor,
   Button,
@@ -37,10 +38,16 @@ const Register = ({ switchLogin }) => {
   const registerUser = async (event) => {
     event.preventDefault();
 
-    if (!isValidEmail || !isPasswordValid || !passwordMatch) return;
+    if (!isValidEmail || !isPasswordValid || !passwordMatch) {
+      if (!isValidEmail) toast.error("Invalid email format");
+      if (!isPasswordValid) toast.error("Password does not meet requirements");
+      if (!passwordMatch) toast.error("Passwords do not match");
+
+      return;
+    }
 
     const response = await createUser({ username, email, password });
-    console.log("hello");
+    console.log(response);
 
     // Reset fields
     setUsername("");
