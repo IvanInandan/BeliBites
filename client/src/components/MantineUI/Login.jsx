@@ -16,14 +16,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { handleLogin } from "../../helpers/authFuncs";
-//import { useDispatch } from "react-redux";
-//import { toast } from "react-toastify";
 
 const Login = ({ switchRegister }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  //const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const login = async (event) => {
@@ -32,7 +29,7 @@ const Login = ({ switchRegister }) => {
     const loginSuccess = await handleLogin(username, password);
 
     if (loginSuccess) {
-      console.log("Login success!");
+      navigate("/dashboard");
     } else {
       console.log("Login failure");
     }

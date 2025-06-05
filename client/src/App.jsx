@@ -1,5 +1,6 @@
 // Import Components
 import Home from "./components/Home";
+import Dashboard from "./components/Dashboard";
 
 // Import Libraries
 import { Routes, Route } from "react-router-dom";
@@ -16,6 +17,7 @@ const App = () => {
     >
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );
