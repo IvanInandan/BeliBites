@@ -10,4 +10,12 @@ const handleLogin = async (username, password) => {
   }
 };
 
-export { handleLogin };
+const checkUsernameUnique = async (username) => {
+  return false;
+};
+
+const checkEmailUnique = async (email) => {
+  return false;
+};
+
+export { handleLogin, checkUsernameUnique, checkEmailUnique };

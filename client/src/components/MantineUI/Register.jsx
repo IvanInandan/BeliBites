@@ -16,11 +16,17 @@ import { IconAlertTriangle, IconCheck } from "@tabler/icons-react";
 import classes from "./Login.module.scss";
 import { PasswordStrength } from "./PasswordStrength";
 import { createUser } from "../../services/user";
+import { checkUsernameUnique, checkEmailUnique } from "../../helpers/authFuncs";
 
 const Register = ({ switchLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  // For user validation
+  const [isUserUnique, setIsUserUnique] = useState(false);
+  const [userTouched, setUserTouched] = useState(false);
+  const showUserError = userTouched && username.length > 0 && !isUserUnique;
 
   // For password validation
   const [isPasswordValid, setIsPasswordValid] = useState(false);
@@ -69,6 +75,27 @@ const Register = ({ switchLogin }) => {
           placeholder="Username"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
+          onBlur={() => {
+            setUserTouched(true);
+            checkUsernameUnique(username);
+          }}
+          error={showUserError ? "Username is not unique" : false}
+          classNames={{
+            input: userTouched
+              ? isUserUnique
+                ? classes.valid
+                : classes.invalid
+              : undefined,
+          }}
+          rightSection={
+            userTouched ? (
+              isUserUnique ? (
+                <IconCheck size={18} stroke={1.5} color="green" />
+              ) : (
+                <IconAlertTriangle size={18} stroke={1.5} color="red" />
+              )
+            ) : null
+          }
           required
         />
 
@@ -77,7 +104,10 @@ const Register = ({ switchLogin }) => {
           placeholder="sanji@yeszeff.com"
           value={email}
           onChange={(event) => setEmail(event.currentTarget.value)}
-          onBlur={() => setEmailTouched(true)} // triggers validation when focus is lost
+          onBlur={() => {
+            setEmailTouched(true);
+            checkEmailUnique(email);
+          }} // triggers validation when focus is lost
           error={showEmailError ? "Invalid email" : false}
           classNames={{
             input: emailTouched
