@@ -9,7 +9,7 @@ const Landing = () => {
 
       <section
         id="home"
-        className="h-screen w-screen flex items-center justify-center bg-yellow-500"
+        className="h-screen w-screen flex items-center justify-center bg-[#f2f1e4]"
       >
         <div className="text-7xl">Home</div>
       </section>
