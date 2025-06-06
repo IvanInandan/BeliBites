@@ -30,11 +30,8 @@ const Login = ({ switchRegister }) => {
 
     const loginSuccess = await handleLogin(username, password);
 
-    if (loginSuccess) {
-      navigate("/dashboard");
-    } else {
+    if (!loginSuccess)
       toast.error("Login failed: Invalid username or password");
-    }
 
     // Reset fields
     setUsername("");
