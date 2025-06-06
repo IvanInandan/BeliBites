@@ -16,6 +16,10 @@ const Recipes = () => {
         "Crack egg",
         "Enjoy!",
       ],
+      servings: 2,
+      imageUrl,
+      tags,
+      difficulty,
     },
 
     {
