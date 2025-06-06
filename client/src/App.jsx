@@ -43,9 +43,9 @@ const App = () => {
 
   return (
     <div
-      style={{
-        cursor: `url(${cursorpng}) 0 0, crosshair`,
-      }}
+    // style={{
+    //   cursor: `url(${cursorpng}) 0 0, crosshair`,
+    // }}
     >
       <Routes>
         {/* Public routes */}

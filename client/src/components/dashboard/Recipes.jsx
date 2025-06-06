@@ -1,3 +1,5 @@
+import { Button } from "@mantine/core";
+
 const Recipes = () => {
   const recipes = [
     {
@@ -18,7 +20,7 @@ const Recipes = () => {
 
     {
       name: "Grilled Cheese Sandwich",
-      description: "You like cheese? You'll love this thien.",
+      description: "You like cheese? You'll love this then.",
       ingredients: ["Sourdough Bread", "Cheese", "Sriracha"],
       steps: [
         "Throw butter on skillet",
@@ -62,6 +64,8 @@ const Recipes = () => {
           </div>
         );
       })}
+
+      <Button>Add a recipe</Button>
     </div>
   );
 };
