@@ -1,14 +1,18 @@
 // Import custom hooks
 import { useAuth } from "./hooks/useAuth";
 
-// Import Components
-import Home from "./components/Home";
-import Dashboard from "./components/Dashboard";
+// Import home components
+import Landing from "./components/home/Landing";
+
+// Import dashbaord components
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import Dashboard from "./components/dashboard/Dashboard";
+import Settings from "./components/dashboard/Settings";
 
 // Import Libraries
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 // Import assets
@@ -33,8 +37,6 @@ const App = () => {
         // Grab recipes of logged in user
       }
     }
-
-    console.log(user);
   }, [user]);
 
   return (
@@ -44,8 +46,37 @@ const App = () => {
       }}
     >
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        {/* Public routes */}
+        <Route
+          path="/"
+          element={!user ? <Landing /> : <Navigate to="/dashboard" replace />}
+        />
+
+        {/* Protected routes, only accessible if the user is authenticated */}
+        {user && (
+          <>
+            <Route
+              path="/dashboard"
+              element={
+                <DashboardLayout>
+                  <Dashboard />
+                </DashboardLayout>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <DashboardLayout>
+                  <Settings />
+                </DashboardLayout>
+              }
+            />
+          </>
+        )}
+
+        {/* If the user is not authenticated and tries to access protected routes */}
+        <Route path="/dashboard" element={<Navigate to="/" replace />} />
+        <Route path="/settings" element={<Navigate to="/" replace />} />
       </Routes>
 
       <ToastContainer

@@ -1,8 +1,8 @@
-import Nav from "./MantineUI/Nav";
+import Nav from "./Nav";
 import About from "./About";
 import Recipes from "./Recipes";
 
-const Home = () => {
+const Landing = () => {
   return (
     <div>
       <Nav />
@@ -31,4 +31,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Landing;
