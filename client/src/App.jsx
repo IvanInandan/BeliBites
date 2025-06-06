@@ -1,3 +1,6 @@
+// Import custom hooks
+import { useAuth } from "./hooks/useAuth";
+
 // Import Components
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
@@ -12,10 +15,26 @@ import { ToastContainer } from "react-toastify";
 import cursorpng from "./assets/spoon.png";
 
 const App = () => {
+  const { cacheUser } = useAuth();
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    console.log("Current user: ", user);
+    // If user doesn't exist in global state, search browser cache
+    if (!user) {
+      const cachedUserJSON = window.localStorage.getItem("user");
+
+      // If exists in cache, set in global state
+      if (cachedUserJSON) {
+        const cachedUser = JSON.parse(cachedUserJSON); // Parse JSON
+        cacheUser(cachedUser);
+
+        // transactionService.setToken(user.token); // Set token used for transaction APIs
+
+        // Grab recipes of logged in user
+      }
+    }
+
+    console.log(user);
   }, [user]);
 
   return (

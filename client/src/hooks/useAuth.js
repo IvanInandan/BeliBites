@@ -24,7 +24,7 @@ export const useAuth = () => {
   const handleLogout = async () => {
     try {
       dispatch(clearUser());
-      window.localStorage.clear("user");
+      window.localStorage.removeItem("user");
       navigate("/");
       return true;
     } catch (error) {
@@ -33,5 +33,15 @@ export const useAuth = () => {
     }
   };
 
-  return { handleLogin, handleLogout };
+  const cacheUser = (user) => {
+    try {
+      dispatch(setUser(user));
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  };
+
+  return { handleLogin, handleLogout, cacheUser };
 };
