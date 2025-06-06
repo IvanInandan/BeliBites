@@ -1,6 +1,7 @@
 import Nav from "./Nav";
 import About from "./About";
 import Recipes from "./Recipes";
+import Footer from "./Footer";
 
 const Landing = () => {
   return (
@@ -27,6 +28,8 @@ const Landing = () => {
       >
         <Recipes />
       </section>
+
+      <Footer />
     </div>
   );
 };

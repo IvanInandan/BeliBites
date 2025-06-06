@@ -132,7 +132,7 @@ const Nav = () => {
 
             <Group
               h="100%"
-              gap={0}
+              gap={30}
               visibleFrom="sm"
               style={{
                 position: "absolute", // Position it absolutely within the header

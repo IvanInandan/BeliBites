@@ -16,10 +16,7 @@ import { MantineProvider } from "@mantine/core";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <Router>
-      <MantineProvider
-        theme={{ primaryColor: "red" }}
-        defaultColorScheme="dark"
-      >
+      <MantineProvider defaultColorScheme="dark">
         <App />
       </MantineProvider>
     </Router>
