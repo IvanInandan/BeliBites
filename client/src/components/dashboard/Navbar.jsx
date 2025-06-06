@@ -65,7 +65,7 @@ export default function Dashboard() {
       </div>
 
       <div className={classes.footer}>
-        <UserButton user={user} />
+        <UserButton />
 
         <a
           href="/logout"

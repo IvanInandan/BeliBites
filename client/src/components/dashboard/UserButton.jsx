@@ -1,15 +1,15 @@
 import { IconChevronRight } from "@tabler/icons-react";
 import { Avatar, Group, Text, UnstyledButton } from "@mantine/core";
 import classes from "./UserButton.module.scss";
+import { useSelector } from "react-redux";
+import zeffAvatar from "../../assets/zeff.jpg";
 
-export default function UserButton({ user }) {
+export default function UserButton() {
+  const user = useSelector((state) => state.user);
   return (
     <UnstyledButton className={classes.user}>
       <Group>
-        <Avatar
-          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png"
-          radius="xl"
-        />
+        <Avatar src={zeffAvatar} radius="xl" />
 
         <div style={{ flex: 1 }}>
           <Text size="sm" fw={500}>
@@ -17,7 +17,7 @@ export default function UserButton({ user }) {
           </Text>
 
           <Text c="dimmed" size="xs">
-            {user.username}@gmail.com
+            {user.email}
           </Text>
         </div>
 

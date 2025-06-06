@@ -4,7 +4,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <div className="flex">
       <Navbar />
-      <div className="grow p-1">{children}</div>
+      <div className="grow p-10">{children}</div>
     </div>
   );
 };

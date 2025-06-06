@@ -99,7 +99,6 @@ const Register = ({ switchLogin, closeRegister }) => {
         }}
       >
         <TextInput
-          className="pb-3"
           label="Username"
           placeholder="Username"
           value={username}
