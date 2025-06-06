@@ -9,6 +9,7 @@ import {
   IconSwitchHorizontal,
   IconMoon,
   IconMoonFilled,
+  IconBurger,
 } from "@tabler/icons-react";
 import { Code, Group, useMantineColorScheme } from "@mantine/core";
 import logo from "../../assets/sanji.png";
@@ -21,6 +22,7 @@ import UserButton from "./UserButton.jsx";
 // Define items in Navbar
 const data = [
   { link: "/dashboard", label: "Dashboard", icon: IconHome },
+  { link: "/dashboard", label: "Your Recipes", icon: IconBurger },
   { link: "/settings", label: "Settings", icon: IconSettings },
 ];
 
@@ -65,16 +67,11 @@ export default function Dashboard() {
       </div>
 
       <div className={classes.footer}>
-        <UserButton />
+        <div style={{ marginBottom: "1rem" }}>
+          <UserButton />
+        </div>
 
-        <a
-          href="/logout"
-          className={classes.link}
-          onClick={(event) => {
-            event.preventDefault();
-            handleLogout(dispatch, navigate, event);
-          }}
-        >
+        <a href="/" className={classes.link} onClick={handleLogout}>
           <IconLogout className={classes.linkIcon} stroke={1.5} />
           <span>Logout</span>
         </a>
