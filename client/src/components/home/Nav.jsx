@@ -36,7 +36,7 @@ import { Link } from "react-router-dom";
 
 import classes from "./Nav.module.scss";
 
-import Login from "./Login";
+import Login from "../home/Login";
 import Register from "./Register";
 import logo from "../../assets/sanji.png";
 
