@@ -3,6 +3,8 @@ import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 
 // Import Libraries
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -10,6 +12,12 @@ import { ToastContainer } from "react-toastify";
 import cursorpng from "./assets/spoon.png";
 
 const App = () => {
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    console.log("Current user: ", user);
+  }, [user]);
+
   return (
     <div
       style={{

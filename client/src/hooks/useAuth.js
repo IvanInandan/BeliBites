@@ -19,7 +19,6 @@ export const useAuth = () => {
 
   const handleLogout = async () => {
     try {
-      console.log("Logging out: ");
       dispatch(clearUser());
       return true;
     } catch (error) {

@@ -12,13 +12,11 @@ import {
 } from "@mantine/core";
 import classes from "./Login.module.scss";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { useAuth } from "../../hooks/useAuth";
-
-import { useSelector } from "react-redux";
 
 const Login = ({ switchRegister }) => {
   const { handleLogin } = useAuth();
@@ -26,12 +24,6 @@ const Login = ({ switchRegister }) => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const user = useSelector((state) => state.user);
-
-  useEffect(() => {
-    console.log("User: ", user);
-  }, [user]);
 
   const login = async (event) => {
     event.preventDefault();
