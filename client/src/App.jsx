@@ -94,6 +94,8 @@ const App = () => {
 
         {/* If the user is not authenticated and tries to access protected routes */}
         <Route path="/dashboard" element={<Navigate to="/" replace />} />
+        <Route path="/recipes" element={<Navigate to="/" replace />} />
+        <Route path="/favorites" element={<Navigate to="/" replace />} />
         <Route path="/settings" element={<Navigate to="/" replace />} />
       </Routes>
 
