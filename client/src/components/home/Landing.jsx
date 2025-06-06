@@ -1,6 +1,6 @@
 import Nav from "./Nav";
 import About from "./About";
-import Recipes from "./Recipes";
+import Collection from "./Collection";
 import Footer from "./Footer";
 
 const Landing = () => {
@@ -26,7 +26,7 @@ const Landing = () => {
         id="recipes"
         className="h-screen w-screen flex justify-center items-center bg-blue-500"
       >
-        <Recipes />
+        <Collection />
       </section>
 
       <Footer />

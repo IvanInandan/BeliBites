@@ -10,6 +10,7 @@ import {
   IconMoon,
   IconMoonFilled,
   IconBurger,
+  IconHeart,
 } from "@tabler/icons-react";
 import { Code, Group, useMantineColorScheme } from "@mantine/core";
 import logo from "../../assets/sanji.png";
@@ -22,7 +23,8 @@ import UserButton from "./UserButton.jsx";
 // Define items in Navbar
 const data = [
   { link: "/dashboard", label: "Dashboard", icon: IconHome },
-  { link: "/dashboard", label: "Your Recipes", icon: IconBurger },
+  { link: "/recipes", label: "Your Recipes", icon: IconBurger },
+  { link: "/favorites", label: "Favorites", icon: IconHeart },
   { link: "/settings", label: "Settings", icon: IconSettings },
 ];
 

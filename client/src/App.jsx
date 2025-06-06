@@ -7,6 +7,8 @@ import Landing from "./components/home/Landing";
 // Import dashbaord components
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Dashboard from "./components/dashboard/Dashboard";
+import Recipes from "./components/dashboard/Recipes";
+import Favorites from "./components/dashboard/Favorites";
 import Settings from "./components/dashboard/Settings";
 
 // Import Libraries
@@ -60,6 +62,22 @@ const App = () => {
               element={
                 <DashboardLayout>
                   <Dashboard />
+                </DashboardLayout>
+              }
+            />
+            <Route
+              path="/recipes"
+              element={
+                <DashboardLayout>
+                  <Recipes />
+                </DashboardLayout>
+              }
+            />
+            <Route
+              path="/favorites"
+              element={
+                <DashboardLayout>
+                  <Favorites />
                 </DashboardLayout>
               }
             />

@@ -36,7 +36,7 @@ export default function Footer() {
   return (
     <div className={classes.footer}>
       <div className={classes.inner}>
-        <div class="logo">
+        <div className="logo">
           <img src={bblogo} className="h-15" />
         </div>
 
