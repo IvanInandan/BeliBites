@@ -16,7 +16,10 @@ import { IconAlertTriangle, IconCheck } from "@tabler/icons-react";
 import classes from "./Login.module.scss";
 import { PasswordStrength } from "./PasswordStrength";
 import { createUser } from "../../services/user";
-import { checkUsernameUnique, checkEmailUnique } from "../../helpers/authFuncs";
+import {
+  checkUsernameUnique,
+  checkEmailUnique,
+} from "../../helpers/uniqueFuncs";
 
 const Register = ({ switchLogin, closeRegister }) => {
   const [username, setUsername] = useState("");
