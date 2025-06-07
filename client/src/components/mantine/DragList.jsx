@@ -1,22 +1,38 @@
+import { useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import cx from "clsx";
 import { Text } from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import classes from "./DragList.module.scss";
 
-const data = [
-  { position: 6, mass: 12.011, symbol: "C", name: "Carbon" },
-  { position: 7, mass: 14.007, symbol: "N", name: "Nitrogen" },
-  { position: 39, mass: 88.906, symbol: "Y", name: "Yttrium" },
-  { position: 56, mass: 137.33, symbol: "Ba", name: "Barium" },
-  { position: 58, mass: 140.12, symbol: "Ce", name: "Cerium" },
-];
-
-export default function DragList() {
+export default function DragList({ data }) {
   const [state, handlers] = useListState(data);
 
+  useEffect(() => {
+    handlers.setState(data);
+  }, [data]);
+
+  // When the list is reordered, update the positions based on new order
+  const onDragEnd = ({ destination, source }) => {
+    if (!destination) return;
+
+    handlers.reorder({ from: source.index, to: destination.index });
+
+    // After reorder, update step values to match new index + 1
+    handlers.setState((current) =>
+      current.map((item, index) => ({
+        ...item,
+        step: index + 1,
+      }))
+    );
+  };
+
   const items = state.map((item, index) => (
-    <Draggable key={item.symbol} index={index} draggableId={item.symbol}>
+    <Draggable
+      key={item.step.toString()}
+      index={index}
+      draggableId={item.step.toString()}
+    >
       {(provided, snapshot) => (
         <div
           className={cx(classes.item, {
@@ -26,12 +42,9 @@ export default function DragList() {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <Text className={classes.symbol}>{item.symbol}</Text>
-          <div>
-            <Text>{item.name}</Text>
-            <Text c="dimmed" size="sm">
-              Position: {item.position} • Mass: {item.mass}
-            </Text>
+          <div className="flex flex-wrap items-start w-full gap-2">
+            <p className="font-semibold pr-5">Step {item.step}: </p>
+            <p className="flex-1 break-words">{item.description}</p>
           </div>
         </div>
       )}
@@ -39,11 +52,7 @@ export default function DragList() {
   ));
 
   return (
-    <DragDropContext
-      onDragEnd={({ destination, source }) =>
-        handlers.reorder({ from: source.index, to: destination?.index || 0 })
-      }
-    >
+    <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="dnd-list" direction="vertical">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef}>

@@ -7,9 +7,9 @@ import {
   TagsInput,
   Button,
 } from "@mantine/core";
-import { IconCirclePlus } from "@tabler/icons-react";
+import { IconCirclePlus, IconCircleMinus } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
-import { addRecipe } from "../../helpers/recipeFuncs";
+import { toast } from "react-toastify";
 
 import Control from "../mantine/Control";
 import DragList from "../mantine/DragList";
@@ -23,18 +23,33 @@ const CreateRecipeForm = () => {
   const [description, setDescription] = useState("");
   const [prepTime, setPrepTime] = useState(0);
   const [cookTime, setCookTime] = useState(0);
+  const [servings, setServings] = useState(0);
+  const [difficulty, setDifficulty] = useState("Easy");
+
+  // For adding materials
+  // For adding ingredients
+  const [newMaterial, setNewMaterial] = useState("");
+  const [newMaterialVisible, setNewMaterialVisible] = useState(false);
+  const newMaterialRef = useRef(null);
+  const [materials, setMaterials] = useState([]);
 
   // For adding ingredients
-  const newIngredientRef = useRef(null);
   const [newIngredient, setNewIngredient] = useState("");
   const [newIngredientVisible, setNewIngredientVisible] = useState(false);
+  const newIngredientRef = useRef(null);
+  const [ingredients, setIngredients] = useState([]);
 
   // For adding step
-  const newStepRef = useRef(null);
   const [newStep, setNewStep] = useState("");
   const [newStepVisible, setNewStepVisible] = useState(false);
+  const newStepRef = useRef(null);
+  const [steps, setSteps] = useState([]);
 
   useEffect(() => {
+    if (newMaterialVisible && newMaterialRef.current) {
+      newMaterialRef.current.focus();
+    }
+
     if (newIngredientVisible && newIngredientRef.current) {
       newIngredientRef.current.focus();
     }
@@ -42,7 +57,22 @@ const CreateRecipeForm = () => {
     if (newStepVisible && newStepRef.current) {
       newStepRef.current.focus();
     }
-  }, [newIngredientVisible, newStepVisible]);
+  }, [newMaterialVisible, newIngredientVisible, newStepVisible]);
+
+  const addRecipe = () => {
+    console.log("Title: ", title);
+    console.log("Description: ", description);
+    console.log("Prep Time: ", prepTime);
+    console.log("Cook Time: ", cookTime);
+    console.log("Servings: ", servings);
+    console.log("Difficulty: ", difficulty);
+    console.log("Ingredients: ", ingredients);
+    console.log("Steps: ");
+    console.log("Tags: ");
+    console.log("Public: ");
+  };
+
+  console.log(steps);
 
   return (
     <div className="h-auto w-full flex flex-col justify-center items-center">
@@ -85,6 +115,19 @@ const CreateRecipeForm = () => {
           required
         />
 
+        <NumberInput
+          label="Servings"
+          placeholder="Servings"
+          suffix=" people"
+          value={servings}
+          onChange={setServings}
+          stepHoldDelay={500}
+          stepHoldInterval={100}
+          allowNegative={false}
+          className="w-[10rem]"
+          required
+        />
+
         <div id="times" className="flex gap-10">
           <NumberInput
             label="Prep Time"
@@ -120,7 +163,78 @@ const CreateRecipeForm = () => {
           >
             Difficulty
           </label>
-          <Control id="difficulty" />
+          <Control
+            id="difficulty"
+            value={difficulty}
+            onChange={setDifficulty}
+          />
+        </div>
+
+        <div id="materials" className="flex flex-col space-y-3">
+          <label
+            htmlFor="newMaterials"
+            className="block font-semibold text-sm pb-1"
+          >
+            Materials
+          </label>
+          <ul className="list-disc pl-5">
+            {materials.map((material) => {
+              return (
+                <div className="flex gap-1 group" key={material}>
+                  <li>{material}</li>
+                  <IconCircleMinus
+                    onClick={() => {
+                      setMaterials((prev) =>
+                        prev.filter((item) => item != material)
+                      );
+                    }}
+                    className="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity transition-translate duration-300 hover:cursor-pointer"
+                  />
+                </div>
+              );
+            })}
+          </ul>
+
+          {newMaterialVisible && (
+            <TextInput
+              ref={newMaterialRef}
+              placeholder="Penne Gorgonzola with Sea King Meat"
+              value={newMaterial}
+              onChange={(event) => {
+                setNewMaterial(event.target.value);
+              }}
+              onBlur={() => {
+                setNewMaterial("");
+                setNewMaterialVisible(false);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" && newMaterial.trim() !== "") {
+                  if (!materials.includes(newMaterial)) {
+                    setMaterials((prev) => [...prev, newMaterial]);
+                    setNewMaterial("");
+                  } else toast.error("Material already exists");
+                }
+                if (event.key === "Escape") {
+                  setNewMaterial("");
+                  setNewMaterialVisible(false);
+                }
+              }}
+              className=""
+              required
+            />
+          )}
+
+          {!newMaterialVisible && (
+            <Button
+              className="self-start !rounded-2xl !pl-2 !pr-3"
+              onClick={() => setNewMaterialVisible(true)}
+            >
+              <div className="flex items-center gap-2">
+                <IconCirclePlus />
+                <span className="text-sm">Add</span>
+              </div>
+            </Button>
+          )}
         </div>
 
         <div id="ingredients" className="flex flex-col space-y-3">
@@ -130,6 +244,24 @@ const CreateRecipeForm = () => {
           >
             Ingredients
           </label>
+          <ul className="list-disc pl-5">
+            {ingredients.map((ingredient) => {
+              return (
+                <div className="flex gap-1 group" key={ingredient}>
+                  <li>{ingredient}</li>
+                  <IconCircleMinus
+                    onClick={() => {
+                      setIngredients((prev) =>
+                        prev.filter((item) => item != ingredient)
+                      );
+                    }}
+                    className="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity transition-translate duration-300 hover:cursor-pointer"
+                  />
+                </div>
+              );
+            })}
+          </ul>
+
           {newIngredientVisible && (
             <TextInput
               ref={newIngredientRef}
@@ -143,11 +275,12 @@ const CreateRecipeForm = () => {
                 setNewIngredientVisible(false);
               }}
               onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  console.log(newStep);
-                  setNewIngredient("");
+                if (event.key === "Enter" && newIngredient.trim() !== "") {
+                  if (!ingredients.includes(newIngredient)) {
+                    setIngredients((prev) => [...prev, newIngredient]);
+                    setNewIngredient("");
+                  } else toast.error("Ingredient already exists");
                 }
-
                 if (event.key === "Escape") {
                   setNewIngredient("");
                   setNewIngredientVisible(false);
@@ -175,9 +308,9 @@ const CreateRecipeForm = () => {
           <label htmlFor="newStep" className="block font-semibold text-sm pb-1">
             Steps
           </label>
-          <DragList />
+          <DragList data={steps} />
           {newStepVisible && (
-            <Textarea
+            <TextInput
               ref={newStepRef}
               placeholder="Penne Gorgonzola with Sea King Meat"
               value={newStep}
@@ -189,9 +322,14 @@ const CreateRecipeForm = () => {
                 setNewStepVisible(false);
               }}
               onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  console.log(newStep);
-                  setNewStep("");
+                if (event.key === "Enter" && newStep.trim() !== "") {
+                  if (!steps.some((step) => step.description === newStep)) {
+                    setSteps((prev) => [
+                      ...prev,
+                      { step: prev.length + 1, description: newStep },
+                    ]);
+                    setNewStep("");
+                  } else toast.error("Step already exists");
                 }
 
                 if (event.key === "Escape") {
