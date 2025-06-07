@@ -8,6 +8,7 @@ import Landing from "./components/home/Landing";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Dashboard from "./components/dashboard/Dashboard";
 import Recipes from "./components/dashboard/Recipes";
+import CreateRecipeForm from "./components/dashboard/CreateRecipeForm";
 import Favorites from "./components/dashboard/Favorites";
 import Settings from "./components/dashboard/Settings";
 
@@ -74,6 +75,14 @@ const App = () => {
               }
             />
             <Route
+              path="/recipes/add"
+              element={
+                <DashboardLayout>
+                  <CreateRecipeForm />
+                </DashboardLayout>
+              }
+            />
+            <Route
               path="/favorites"
               element={
                 <DashboardLayout>
@@ -95,6 +104,7 @@ const App = () => {
         {/* If the user is not authenticated and tries to access protected routes */}
         <Route path="/dashboard" element={<Navigate to="/" replace />} />
         <Route path="/recipes" element={<Navigate to="/" replace />} />
+        <Route path="/recipes/add" element={<Navigate to="/" replace />} />
         <Route path="/favorites" element={<Navigate to="/" replace />} />
         <Route path="/settings" element={<Navigate to="/" replace />} />
       </Routes>

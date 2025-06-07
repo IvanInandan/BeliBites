@@ -8,7 +8,7 @@ import {
 import { ActionIcon, Anchor, Group } from "@mantine/core";
 import classes from "./Footer.module.scss";
 import logo from "../../assets/sanji.png";
-import bblogo from "../../../public/belibites-icon.png";
+import bblogo from "../../assets/belibites-icon.png";
 
 const links = [
   { link: "#", label: "Contact" },
@@ -47,7 +47,7 @@ export default function Footer() {
             size="lg"
             //variant="default"
             radius="xl"
-            style={{ backgroundColor: "#becae2", border: "1px solid #174dc4" }}
+            style={{ backgroundColor: "#fdfdfd", border: "1px solid #174dc4" }}
           >
             <a href="https://www.linkedin.com/in/ivaninandan/">
               <IconBrandLinkedin size={18} stroke={1.5} color="black" />
@@ -59,7 +59,7 @@ export default function Footer() {
             //variant="default"
             radius="xl"
             className="bg-gray-200"
-            style={{ backgroundColor: "#becae2", border: "1px solid #174dc4" }}
+            style={{ backgroundColor: "#fdfdfd", border: "1px solid #174dc4" }}
           >
             <a href="https://github.com/IvanInandan/">
               <IconBrandGithub size={18} stroke={1.5} color="black" />

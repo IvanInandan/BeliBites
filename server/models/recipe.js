@@ -32,6 +32,11 @@ const recipeSchema = new mongoose.Schema({
     enum: ["Easy", "Medium", "Hard"],
     default: "Easy",
   },
+  public: {
+    type: Boolean,
+    default: false,
+    required,
+  },
   authorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

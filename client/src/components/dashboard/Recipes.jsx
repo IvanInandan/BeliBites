@@ -1,6 +1,12 @@
-import { Button } from "@mantine/core";
+import { Button, Modal } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import CreateRecipeForm from "./CreateRecipeForm";
+import { useNavigate } from "react-router-dom";
 
 const Recipes = () => {
+  const [opened, { open, close }] = useDisclosure(false);
+  const navigate = useNavigate();
+
   const recipes = [
     {
       name: "Ramen",
@@ -17,9 +23,9 @@ const Recipes = () => {
         "Enjoy!",
       ],
       servings: 2,
-      imageUrl,
-      tags,
-      difficulty,
+      imageUrl: "",
+      tags: [],
+      difficulty: "",
     },
 
     {
@@ -34,6 +40,9 @@ const Recipes = () => {
       ],
       cookTime: 10,
       prepTime: 20,
+      imageUrl: "",
+      tags: [],
+      difficulty: "",
     },
 
     {
@@ -43,6 +52,9 @@ const Recipes = () => {
       steps: ["Throw an egg on the pan you doofus"],
       cookTime: 5,
       prepTime: 0,
+      imageUrl: "",
+      tags: [],
+      difficulty: "",
     },
   ];
 
@@ -69,7 +81,46 @@ const Recipes = () => {
         );
       })}
 
-      <Button>Add a recipe</Button>
+      <Modal
+        zIndex={1000}
+        styles={{
+          header: {
+            padding: "10px",
+            margin: 0,
+            height: 0,
+            minHeight: 0,
+          },
+          title: {
+            display: "none",
+          },
+          modal: {
+            borderRadius: "3rem",
+          },
+        }}
+        closeButtonProps={{
+          style: {
+            top: 10,
+            right: 10,
+            position: "absolute",
+          },
+        }}
+        size="50%"
+        opened={opened}
+        onClose={close}
+        centered
+      >
+        <CreateRecipeForm close={close} />
+      </Modal>
+
+      <Button
+        variant="default"
+        onClick={() => {
+          navigate("/recipes/add");
+        }}
+        style={{ border: "1px solid #174dc4" }}
+      >
+        Add a recipe
+      </Button>
     </div>
   );
 };

@@ -10,6 +10,7 @@ import {
   TextInput,
   Title,
 } from "@mantine/core";
+
 import classes from "./Login.module.scss";
 
 import { useState } from "react";
@@ -55,15 +56,25 @@ const Login = ({ switchRegister }) => {
           placeholder="sanji"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              login(event);
+            }
+          }}
           required
         />
         <PasswordInput
           label="Password"
           placeholder="Your password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          required
           mt="md"
+          onChange={(event) => setPassword(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              login(event);
+            }
+          }}
+          required
         />
         <Group justify="space-between" mt="lg">
           <Checkbox label="Remember me" />

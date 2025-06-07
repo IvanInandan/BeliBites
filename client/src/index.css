@@ -36,3 +36,7 @@
 }
 
 /* ---------------------- */
+
+.addEntry:hover {
+  cursor: finger;
+}
