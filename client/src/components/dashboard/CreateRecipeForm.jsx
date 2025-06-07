@@ -23,7 +23,7 @@ const CreateRecipeForm = () => {
   const [description, setDescription] = useState("");
   const [prepTime, setPrepTime] = useState(0);
   const [cookTime, setCookTime] = useState(0);
-  const [servings, setServings] = useState(0);
+  const [serving, setServing] = useState(0);
   const [difficulty, setDifficulty] = useState("Easy");
 
   // For adding materials
@@ -64,15 +64,13 @@ const CreateRecipeForm = () => {
     console.log("Description: ", description);
     console.log("Prep Time: ", prepTime);
     console.log("Cook Time: ", cookTime);
-    console.log("Servings: ", servings);
+    console.log("Servings: ", serving);
     console.log("Difficulty: ", difficulty);
     console.log("Ingredients: ", ingredients);
-    console.log("Steps: ");
+    console.log("Steps: ", steps);
     console.log("Tags: ");
     console.log("Public: ");
   };
-
-  console.log(steps);
 
   return (
     <div className="h-auto w-full flex flex-col justify-center items-center">
@@ -116,11 +114,11 @@ const CreateRecipeForm = () => {
         />
 
         <NumberInput
-          label="Servings"
-          placeholder="Servings"
+          label="Serving"
+          placeholder="People"
           suffix=" people"
-          value={servings}
-          onChange={setServings}
+          value={serving}
+          onChange={setServing}
           stepHoldDelay={500}
           stepHoldInterval={100}
           allowNegative={false}

@@ -17,12 +17,19 @@ const recipeSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  materials: {
+    type: [String],
+    required: true,
+  },
   ingredients: {
     type: [String],
     required: true,
   },
   steps: {
-    type: [String],
+    type: {
+      step: Number,
+      description: String,
+    },
     required: true,
   },
   imageUrl: String,
