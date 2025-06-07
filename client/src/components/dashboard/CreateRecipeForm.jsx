@@ -21,10 +21,10 @@ const CreateRecipeForm = () => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [prepTime, setPrepTime] = useState(0);
-  const [cookTime, setCookTime] = useState(0);
-  const [serving, setServing] = useState(0);
-  const [difficulty, setDifficulty] = useState("Easy");
+  const [prepTime, setPrepTime] = useState("");
+  const [cookTime, setCookTime] = useState("");
+  const [serving, setServing] = useState("");
+  const [difficulty, setDifficulty] = useState("");
   const [tags, setTags] = useState([]);
   const [visibility, setVisibility] = useState("");
 
@@ -162,21 +162,22 @@ const CreateRecipeForm = () => {
             htmlFor="difficulty"
             className="block font-semibold text-sm pb-1"
           >
-            Difficulty
+            Difficulty <span className="text-red-500">*</span>
           </label>
           <Control
             id="difficulty"
             value={difficulty}
             onChange={setDifficulty}
+            required
           />
         </div>
 
-        <div id="materials" className="flex flex-col space-y-0">
+        <div id="materials" className="flex flex-col space-y-2">
           <label
             htmlFor="newMaterials"
             className="block font-semibold text-sm pb-1"
           >
-            Materials
+            Materials <span className="text-red-500">*</span>
           </label>
           <ul className="list-disc pl-5">
             {materials.map((material) => {
@@ -238,12 +239,12 @@ const CreateRecipeForm = () => {
           )}
         </div>
 
-        <div id="ingredients" className="flex flex-col space-y-0">
+        <div id="ingredients" className="flex flex-col space-y-2">
           <label
             htmlFor="newIngredient"
             className="block font-semibold text-sm pb-1"
           >
-            Ingredients
+            Ingredients <span className="text-red-500">*</span>
           </label>
           <ul className="list-disc pl-5">
             {ingredients.map((ingredient) => {
@@ -305,9 +306,9 @@ const CreateRecipeForm = () => {
           )}
         </div>
 
-        <div id="steps" className="flex flex-col space-y-0 mb-10">
+        <div id="steps" className="flex flex-col space-y-2 mb-10">
           <label htmlFor="newStep" className="block font-semibold text-sm pb-1">
-            Steps
+            Steps <span className="text-red-500">*</span>
           </label>
           <DragList data={steps} updateData={setSteps} />
           {newStepVisible && (

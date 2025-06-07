@@ -9,12 +9,21 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  serving: {
+    type: Number,
+    required: true,
+  },
   prepTime: {
     type: Number,
     required: true,
   },
   cookTime: {
     type: Number,
+    required: true,
+  },
+  difficulty: {
+    type: String,
+    enum: ["Easy", "Medium", "Hard", "Zeff"],
     required: true,
   },
   materials: {
@@ -34,15 +43,10 @@ const recipeSchema = new mongoose.Schema({
   },
   imageUrl: String,
   tags: [String],
-  difficulty: {
-    type: String,
-    enum: ["Easy", "Medium", "Hard"],
-    default: "Easy",
-  },
   public: {
-    type: Boolean,
-    default: false,
-    required,
+    type: String,
+    enum: ["public", "private"],
+    required: true,
   },
   authorId: {
     type: mongoose.Schema.Types.ObjectId,
