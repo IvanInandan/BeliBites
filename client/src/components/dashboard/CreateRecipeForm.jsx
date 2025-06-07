@@ -25,6 +25,8 @@ const CreateRecipeForm = () => {
   const [cookTime, setCookTime] = useState(0);
   const [serving, setServing] = useState(0);
   const [difficulty, setDifficulty] = useState("Easy");
+  const [tags, setTags] = useState([]);
+  const [visibility, setVisibility] = useState("");
 
   // For adding materials
   // For adding ingredients
@@ -62,14 +64,15 @@ const CreateRecipeForm = () => {
   const addRecipe = () => {
     console.log("Title: ", title);
     console.log("Description: ", description);
+    console.log("Servings: ", serving);
     console.log("Prep Time: ", prepTime);
     console.log("Cook Time: ", cookTime);
-    console.log("Servings: ", serving);
     console.log("Difficulty: ", difficulty);
+    console.log("Materials: ", materials);
     console.log("Ingredients: ", ingredients);
     console.log("Steps: ", steps);
-    console.log("Tags: ");
-    console.log("Public: ");
+    console.log("Tags: ", tags);
+    console.log("Visibility: ", visibility);
   };
 
   return (
@@ -354,8 +357,18 @@ const CreateRecipeForm = () => {
         </div>
 
         <Attachment />
-        <TagsInput label="Tags" placeholder="Enter tag" />
-        <Checkbox text="Share your recipe with the public?" />
+        <TagsInput
+          label="Tags"
+          placeholder="Enter tag"
+          data={[]}
+          value={tags}
+          onChange={setTags}
+        />
+        <Checkbox
+          text="Share your recipe with the public?"
+          value={visibility}
+          onChange={setVisibility}
+        />
 
         <div className="flex justify-center gap-10">
           <Button className="!w-[10rem]" onClick={addRecipe} mt="xl">
