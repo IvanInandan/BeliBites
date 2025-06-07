@@ -2,9 +2,9 @@ import Navbar from "./Navbar";
 
 const DashboardLayout = ({ children }) => {
   return (
-    <div className="flex">
+    <div className="flex h-screen overflow-hidden">
       <Navbar />
-      <div className="grow p-10">{children}</div>
+      <div className="grow overflow-y-auto p-10">{children}</div>
     </div>
   );
 };

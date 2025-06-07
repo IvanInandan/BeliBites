@@ -170,7 +170,7 @@ const CreateRecipeForm = () => {
           />
         </div>
 
-        <div id="materials" className="flex flex-col space-y-3">
+        <div id="materials" className="flex flex-col space-y-0">
           <label
             htmlFor="newMaterials"
             className="block font-semibold text-sm pb-1"
@@ -237,7 +237,7 @@ const CreateRecipeForm = () => {
           )}
         </div>
 
-        <div id="ingredients" className="flex flex-col space-y-3">
+        <div id="ingredients" className="flex flex-col space-y-0">
           <label
             htmlFor="newIngredient"
             className="block font-semibold text-sm pb-1"
@@ -304,11 +304,11 @@ const CreateRecipeForm = () => {
           )}
         </div>
 
-        <div id="steps" className="flex flex-col space-y-3 mb-10">
+        <div id="steps" className="flex flex-col space-y-0 mb-10">
           <label htmlFor="newStep" className="block font-semibold text-sm pb-1">
             Steps
           </label>
-          <DragList data={steps} />
+          <DragList data={steps} updateData={setSteps} />
           {newStepVisible && (
             <TextInput
               ref={newStepRef}
