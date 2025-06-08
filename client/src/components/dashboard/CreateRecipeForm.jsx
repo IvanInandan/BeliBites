@@ -16,20 +16,24 @@ import DragList from "../mantine/DragList";
 import Checkbox from "../mantine/Checkbox";
 import Attachment from "../mantine/Attachment";
 
+import { createRecipe } from "../../services/recipe";
+
 const CreateRecipeForm = () => {
   const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [prepTime, setPrepTime] = useState("");
-  const [cookTime, setCookTime] = useState("");
   const [serving, setServing] = useState("");
-  const [difficulty, setDifficulty] = useState("");
+  const servingRef = useRef(null);
+  const [prepTime, setPrepTime] = useState("");
+  const prepTimeRef = useRef(null);
+  const [cookTime, setCookTime] = useState("");
+  const cookTimeRef = useRef(null);
+  const [difficulty, setDifficulty] = useState("easy");
   const [tags, setTags] = useState([]);
-  const [visibility, setVisibility] = useState("");
+  const [visibility, setVisibility] = useState("public");
 
   // For adding materials
-  // For adding ingredients
   const [newMaterial, setNewMaterial] = useState("");
   const [newMaterialVisible, setNewMaterialVisible] = useState(false);
   const newMaterialRef = useRef(null);
@@ -61,18 +65,46 @@ const CreateRecipeForm = () => {
     }
   }, [newMaterialVisible, newIngredientVisible, newStepVisible]);
 
+  const handleFocus = (ref) => (event) => {
+    if (ref.current) {
+      // Use setTimeout to delay the select call after internal focus logic
+      setTimeout(() => {
+        ref.current.select();
+      }, 0);
+    }
+  };
+
   const addRecipe = () => {
-    console.log("Title: ", title);
-    console.log("Description: ", description);
-    console.log("Servings: ", serving);
-    console.log("Prep Time: ", prepTime);
-    console.log("Cook Time: ", cookTime);
-    console.log("Difficulty: ", difficulty);
-    console.log("Materials: ", materials);
-    console.log("Ingredients: ", ingredients);
-    console.log("Steps: ", steps);
-    console.log("Tags: ", tags);
-    console.log("Visibility: ", visibility);
+    if (
+      !title ||
+      !description ||
+      !serving ||
+      prepTime === null ||
+      cookTime === null ||
+      !difficulty ||
+      !materials ||
+      !ingredients ||
+      !steps ||
+      !visibility
+    ) {
+      toast.error("Please enter all required fields");
+    }
+
+    const recipe = {
+      title,
+      description,
+      serving,
+      prepTime,
+      cookTime,
+      difficulty,
+      materials,
+      ingredients,
+      steps,
+      tags,
+      visibility,
+    };
+
+    console.log(recipe);
   };
 
   return (
@@ -117,6 +149,8 @@ const CreateRecipeForm = () => {
         />
 
         <NumberInput
+          ref={servingRef}
+          onFocus={handleFocus(servingRef)}
           label="Serving"
           placeholder="People"
           suffix=" people"
@@ -125,12 +159,15 @@ const CreateRecipeForm = () => {
           stepHoldDelay={500}
           stepHoldInterval={100}
           allowNegative={false}
+          min={1}
           className="w-[10rem]"
           required
         />
 
         <div id="times" className="flex gap-10">
           <NumberInput
+            ref={prepTimeRef}
+            onFocus={handleFocus(prepTimeRef)}
             label="Prep Time"
             placeholder="Minutes"
             suffix=" minutes"
@@ -139,11 +176,14 @@ const CreateRecipeForm = () => {
             stepHoldDelay={500}
             stepHoldInterval={100}
             allowNegative={false}
+            min={0}
             className=""
             required
           />
 
           <NumberInput
+            ref={cookTimeRef}
+            onFocus={handleFocus(cookTimeRef)}
             label="Cook Time"
             placeholder="Minutes"
             suffix=" minutes"
@@ -152,6 +192,7 @@ const CreateRecipeForm = () => {
             stepHoldDelay={500}
             stepHoldInterval={100}
             allowNegative={false}
+            min={0}
             className=""
             required
           />
