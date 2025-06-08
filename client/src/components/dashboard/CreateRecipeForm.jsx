@@ -74,7 +74,7 @@ const CreateRecipeForm = () => {
     }
   };
 
-  const addRecipe = () => {
+  const addRecipe = async () => {
     if (
       !title ||
       !description ||
@@ -104,7 +104,13 @@ const CreateRecipeForm = () => {
       visibility,
     };
 
-    console.log(recipe);
+    try {
+      const result = await createRecipe(recipe);
+      console.log(result);
+    } catch (error) {
+      console.error("Failed to create recipe: ", error);
+      toast.error("Failed to add recipe. Please try again.");
+    }
   };
 
   return (
