@@ -11,7 +11,7 @@ recipeRouter.post("/", tokenDecoder, async (request, response, next) => {
     const decodedToken = request.user;
     console.log("From token: ", decodedToken);
 
-    const newRecipe = new Recipe({ ...body });
+    const newRecipe = new Recipe({ ...body, authorId: decodedToken.id });
     const savedRecipe = await newRecipe.save();
 
     console.log(savedRecipe);
