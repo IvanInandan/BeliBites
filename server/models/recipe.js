@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const recipeSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -23,7 +23,7 @@ const recipeSchema = new mongoose.Schema({
   },
   difficulty: {
     type: String,
-    enum: ["Easy", "Medium", "Hard", "Zeff"],
+    enum: ["easy", "medium", "hard", "zeff"],
     required: true,
   },
   materials: {
@@ -35,15 +35,17 @@ const recipeSchema = new mongoose.Schema({
     required: true,
   },
   steps: {
-    type: {
-      step: Number,
-      description: String,
-    },
+    type: [
+      {
+        step: Number,
+        description: String,
+      },
+    ],
     required: true,
   },
   imageUrl: String,
   tags: [String],
-  public: {
+  visibility: {
     type: String,
     enum: ["public", "private"],
     required: true,
@@ -51,7 +53,15 @@ const recipeSchema = new mongoose.Schema({
   authorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: true,
+    required: false,
+  },
+});
+
+recipeSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = document._id;
+    delete returnedObject._id;
+    delete returnedObject.__v;
   },
 });
 

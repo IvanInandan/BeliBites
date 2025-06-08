@@ -1,4 +1,5 @@
 import { login } from "../services/auth";
+import { setToken } from "../services/apiClient";
 import { setUser, clearUser } from "../reducers/userReducer";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +11,9 @@ export const useAuth = () => {
   const handleLogin = async (username, password) => {
     try {
       const user = await login({ username, password });
+      setToken(user.token);
       dispatch(setUser(user));
+
       window.localStorage.setItem("user", JSON.stringify(user));
       navigate("/dashboard");
 

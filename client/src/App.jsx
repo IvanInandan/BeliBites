@@ -18,6 +18,9 @@ import { useSelector } from "react-redux";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
+// Import functions
+import { token, setToken } from "./services/apiClient";
+
 // Import assets
 import cursorpng from "./assets/spoon.png";
 
@@ -34,8 +37,7 @@ const App = () => {
       if (cachedUserJSON) {
         const cachedUser = JSON.parse(cachedUserJSON); // Parse JSON
         cacheUser(cachedUser);
-
-        // transactionService.setToken(user.token); // Set token used for transaction APIs
+        setToken(cachedUser.token);
 
         // Grab recipes of logged in user
       }

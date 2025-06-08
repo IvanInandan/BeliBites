@@ -1,8 +1,8 @@
-import axios from "axios";
-const baseUrl = "/api/recipes";
+import { apiClient } from "./apiClient";
+const baseUrl = "/recipes";
 
 const createRecipe = async (recipe) => {
-  const response = axios.post(baseUrl, recipe);
+  const response = await apiClient.post(baseUrl, recipe);
   return response.data;
 };
 
