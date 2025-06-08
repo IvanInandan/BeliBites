@@ -1,4 +1,5 @@
 const logger = require("./logger");
+const jwt = require("jsonwebtoken");
 
 const requestLogger = (req, res, next) => {
   logger.info("Method: ", req.method);
@@ -48,7 +49,7 @@ const tokenExtractor = (request, response, next) => {
 };
 
 const tokenDecoder = (request, response, next) => {
-  // Decode token header and see if valid. If token is invalid, error is caught and passed to errorHandler middleware
+  // Decode token and see if valid. If token is invalid, error is caught and passed to errorHandler middleware
   const decodedToken = jwt.verify(request.token, process.env.SECRET);
 
   if (!decodedToken.id) {
@@ -57,6 +58,7 @@ const tokenDecoder = (request, response, next) => {
       .json({ error: "token does not contain user information" });
   }
 
+  // If token is valid, place contents of decoded token into request.user arg
   request.user = decodedToken;
   next();
 };
