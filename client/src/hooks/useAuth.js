@@ -26,6 +26,7 @@ export const useAuth = () => {
 
   const handleLogout = async () => {
     try {
+      setToken(null);
       dispatch(clearUser());
       window.localStorage.removeItem("user");
       navigate("/");

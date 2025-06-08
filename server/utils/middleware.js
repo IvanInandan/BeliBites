@@ -32,8 +32,39 @@ const errorHandler = (err, req, res, next) => {
   next(err);
 };
 
+// If authoriation header exists in request, grab the token from it and assign it to token arg
+const tokenExtractor = (request, response, next) => {
+  // Grab "authorization" in request header and set to authorization variable
+  const authorization = request.get("Authorization");
+
+  // If authorization exists and starts with 'Bearer ____'
+  if (authorization && authorization.startsWith("Bearer ")) {
+    request.token = authorization.replace("Bearer ", ""); // Remove 'Bearer ' sub-string and remain with token (ie: 'Bearer [token])
+  } else {
+    request.token = null; // Else do nothing
+  }
+
+  next();
+};
+
+const tokenDecoder = (request, response, next) => {
+  // Decode token header and see if valid. If token is invalid, error is caught and passed to errorHandler middleware
+  const decodedToken = jwt.verify(request.token, process.env.SECRET);
+
+  if (!decodedToken.id) {
+    return response
+      .status(401)
+      .json({ error: "token does not contain user information" });
+  }
+
+  request.user = decodedToken;
+  next();
+};
+
 module.exports = {
   requestLogger,
   unknownEndpoint,
   errorHandler,
+  tokenExtractor,
+  tokenDecoder,
 };

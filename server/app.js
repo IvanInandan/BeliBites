@@ -16,7 +16,8 @@ app.use(cors()); // Allows your port (server) to be reached by other ports (fron
 app.use(express.json()); // JSON Parser (parses request body to JSON before sending to routes)
 app.use(middleware.requestLogger); // Print request to console BEFORE sending
 
-// Implement token extractor below
+// Sets request.token for all requests made below
+app.use(middleware.tokenExtractor); // If 'authorization' header exists, extract token and place in request.token arg
 
 // Implement routers below
 app.use("/api/login", loginRouter);
