@@ -106,7 +106,8 @@ const CreateRecipeForm = () => {
 
     try {
       const result = await createRecipe(recipe);
-      console.log(result);
+      toast.success("Recipe successfully added to your cook book!");
+      navigate("/recipes");
     } catch (error) {
       console.error("Failed to create recipe: ", error);
       toast.error("Failed to add recipe. Please try again.");

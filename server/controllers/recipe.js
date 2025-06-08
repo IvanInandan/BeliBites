@@ -9,14 +9,15 @@ recipeRouter.post("/", tokenDecoder, async (request, response, next) => {
   try {
     const body = request.body;
     const decodedToken = request.user;
-    console.log("From token: ", decodedToken);
+    const user = await User.findById(decodedToken.id);
 
     const newRecipe = new Recipe({ ...body, authorId: decodedToken.id });
     const savedRecipe = await newRecipe.save();
 
-    console.log(savedRecipe);
+    user.recipes = user.recipes.concat(savedRecipe._id); // Concat recipe database ID into user's recipe array
+    await user.save(); // Save user to finalize change to transaction array
 
-    return response.status(201).json(savedRecipe);
+    return response.status(201).json(savedRecipe, user);
   } catch (error) {
     next(error);
   }
