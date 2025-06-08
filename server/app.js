@@ -2,8 +2,9 @@
 const middleware = require("./utils/middleware");
 
 // Import controllers
-const userRouter = require("./controllers/user");
 const loginRouter = require("./controllers/login");
+const userRouter = require("./controllers/user");
+const recipeRouter = require("./controllers/recipe");
 
 // Import libraries
 const express = require("express");
@@ -18,8 +19,9 @@ app.use(middleware.requestLogger); // Print request to console BEFORE sending
 // Implement token extractor below
 
 // Implement routers below
-app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
+app.use("/api/users", userRouter);
+app.use("/api/recipes", recipeRouter);
 
 // Middlewares executed after requests
 app.use(middleware.unknownEndpoint);
