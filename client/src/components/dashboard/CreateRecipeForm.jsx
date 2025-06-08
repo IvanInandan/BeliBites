@@ -82,9 +82,9 @@ const CreateRecipeForm = () => {
       prepTime === null ||
       cookTime === null ||
       !difficulty ||
-      !materials ||
-      !ingredients ||
-      !steps ||
+      materials.length === 0 ||
+      ingredients.length === 0 ||
+      steps.length === 0 ||
       !visibility
     ) {
       toast.error("Please enter all required fields");
