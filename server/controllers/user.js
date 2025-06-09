@@ -39,7 +39,6 @@ userRouter.get("/:id", async (request, response, next) => {
 userRouter.post("/", async (request, response, next) => {
   try {
     const { username, email, password } = request.body;
-    console.log(username, email, password);
 
     // Generate password hash using bcryptjs library
     const saltRound = 10;

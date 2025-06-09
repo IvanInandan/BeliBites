@@ -66,7 +66,6 @@ const Register = ({ switchLogin, closeRegister }) => {
     }
 
     const response = await createUser({ username, email, password });
-    console.log(response);
 
     // Reset fields
     setUsername("");

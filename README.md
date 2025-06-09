@@ -1,7 +1,7 @@
-
 # BeliBites
 
 BeliBits is a recipe sharing collaboration web application built using React, node.js with Express and MongoDB.
+
 ## Tech Stack
 
 **Client:** React
@@ -10,18 +10,22 @@ BeliBits is a recipe sharing collaboration web application built using React, no
 
 **UI:** Tailwind CSS with MantineUI
 
-**Global State Management:** Redux Toolkit
+**Global State Management:**
+
+- Redux Toolkit: UI Theme, User information
+- TanStack Query: Recipes (Server-side syncing)
 
 **Libraries:** axios, toastify, react-router, sass
-
 
 ## Features
 
 TBD
+
 ## Roadmap
 
 - Check for unique username and email on register
 - Create user dashboard when logged in
+
 ## Run Locally
 
 Clone the project
@@ -67,12 +71,11 @@ Start the server
 ```
 
 Navigate to page at the following:
+
 ```bash
   http://localhost:5173/
 ```
 
-
 ## Support
 
 I appreciate you checking out! For support please email at c.ivaninandan@gmail.com
-

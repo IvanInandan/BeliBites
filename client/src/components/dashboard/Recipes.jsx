@@ -64,13 +64,7 @@ const Recipes = () => {
 
       {recipes.map((item, index) => {
         return (
-          <div
-            key={index}
-            className="p-4 bg-blue-100 rounded mb-2"
-            onClick={() => {
-              console.log("Hello");
-            }}
-          >
+          <div key={index} className="p-4 bg-blue-100 rounded mb-2">
             <h1>Name: {item.name}</h1>
             <p>Description: {item.description}</p>
             <p>Prep time: {item.prepTime} minutes</p>

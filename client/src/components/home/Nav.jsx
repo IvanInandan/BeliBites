@@ -108,7 +108,6 @@ const Nav = () => {
 
   // Function to scroll to sections defined in Home.jsx
   const scrollTo = (sectionId) => {
-    console.log("Scrolling to: ", sectionId);
     document.getElementById(sectionId).scrollIntoView({ behavior: "smooth" });
   };
 
