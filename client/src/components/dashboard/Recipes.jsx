@@ -8,7 +8,7 @@ const Recipes = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
 
-  const { recipeQuery } = useRecipes();
+  const { recipeQuery, removeRecipe } = useRecipes();
 
   if (recipeQuery.isLoading) {
     return <div>Loading recipes...</div>;
@@ -19,19 +19,31 @@ const Recipes = () => {
   }
 
   const recipes = recipeQuery.data.recipes;
-  console.log(recipes);
+
+  const deleteRecipe = (recipe) => {
+    if (window.confirm("Are you sure you want to delete this recipe?")) {
+      removeRecipe.mutate(recipe.id);
+    }
+  };
 
   return (
     <div>
       <p className="text-7xl">Here are your recipes chef!</p>
 
-      {recipes.map((item, index) => {
+      {recipes.map((recipe, index) => {
         return (
           <div key={index} className="p-4 bg-blue-100 rounded mb-2">
-            <h1>Name: {item.title}</h1>
-            <p>Description: {item.description}</p>
-            <p>Prep time: {item.prepTime} minutes</p>
-            <p>Cook time: {item.cookTime} minutes</p>
+            <h1>Name: {recipe.title}</h1>
+            <p>Description: {recipe.description}</p>
+            <p>Prep time: {recipe.prepTime} minutes</p>
+            <p>Cook time: {recipe.cookTime} minutes</p>
+            <Button
+              onClick={() => {
+                deleteRecipe(recipe);
+              }}
+            >
+              Delete
+            </Button>
           </div>
         );
       })}

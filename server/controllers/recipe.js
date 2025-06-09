@@ -45,7 +45,7 @@ recipeRouter.delete("/:id", tokenDecoder, async (request, response, next) => {
         .json({ error: `Recipe with ID ${request.params.id} was not found` });
     }
 
-    const recipeUserId = recipe.user.toString();
+    const recipeUserId = request.user.id.toString();
     const tokenUserId = request.user.id;
 
     if (recipeUserId !== tokenUserId) {
@@ -54,7 +54,7 @@ recipeRouter.delete("/:id", tokenDecoder, async (request, response, next) => {
       });
     }
 
-    const deletedRecipe = Recipe.findByIdAndDelete(request.params.id);
+    const deletedRecipe = await Recipe.findByIdAndDelete(request.params.id);
 
     response.status(201).json(deletedRecipe);
 

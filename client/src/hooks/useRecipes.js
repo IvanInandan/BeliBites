@@ -52,5 +52,6 @@ export const useRecipes = () => {
   return {
     recipeQuery,
     addRecipe,
+    removeRecipe,
   };
 };
