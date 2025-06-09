@@ -50,7 +50,7 @@ const recipeSchema = new mongoose.Schema({
     enum: ["public", "private"],
     required: true,
   },
-  authorId: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
