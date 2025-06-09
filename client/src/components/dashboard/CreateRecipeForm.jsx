@@ -16,10 +16,11 @@ import DragList from "../mantine/DragList";
 import Checkbox from "../mantine/Checkbox";
 import Attachment from "../mantine/Attachment";
 
-import { createRecipe } from "../../services/recipe";
+import { useRecipes } from "../../hooks/useRecipes";
 
 const CreateRecipeForm = () => {
   const navigate = useNavigate();
+  const { addRecipe } = useRecipes();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -74,7 +75,7 @@ const CreateRecipeForm = () => {
     }
   };
 
-  const addRecipe = async () => {
+  const createRecipe = async () => {
     if (
       !title ||
       !description ||
@@ -104,14 +105,7 @@ const CreateRecipeForm = () => {
       visibility,
     };
 
-    try {
-      const result = await createRecipe(recipe);
-      toast.success("Recipe successfully added to your cook book!");
-      navigate("/recipes");
-    } catch (error) {
-      console.error("Failed to create recipe: ", error);
-      toast.error("Failed to add recipe. Please try again.");
-    }
+    addRecipe.mutate(recipe);
   };
 
   return (
@@ -420,7 +414,7 @@ const CreateRecipeForm = () => {
         />
 
         <div className="flex justify-center gap-10">
-          <Button className="!w-[10rem]" onClick={addRecipe} mt="xl">
+          <Button className="!w-[10rem]" onClick={createRecipe} mt="xl">
             Add
           </Button>
 

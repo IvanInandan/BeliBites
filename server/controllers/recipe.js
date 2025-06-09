@@ -2,8 +2,20 @@ const User = require("../models/user");
 const Recipe = require("../models/recipe");
 const recipeRouter = require("express").Router();
 const { tokenDecoder } = require("../utils/middleware");
+const { request } = require("express");
 
 //NOTE: tokenDecoder middleware runs before all functions that contain it, and sets request.user for all routes
+
+recipeRouter.get("/", async (request, response, next) => {
+  try {
+    const recipes = await Recipe.find({}).populate("authorId", {
+      username: 1,
+    });
+    response.json({ recipes });
+  } catch (error) {
+    next(error);
+  }
+});
 
 recipeRouter.post("/", tokenDecoder, async (request, response, next) => {
   try {
