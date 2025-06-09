@@ -19,8 +19,8 @@ import Attachment from "../mantine/Attachment";
 import { useRecipes } from "../../hooks/useRecipes";
 
 const CreateRecipeForm = () => {
-  const navigate = useNavigate();
   const { addRecipe } = useRecipes();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");

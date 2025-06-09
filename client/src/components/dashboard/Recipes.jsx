@@ -36,7 +36,7 @@ const Recipes = () => {
         );
       })}
 
-      <Modal
+      {/* <Modal
         zIndex={1000}
         styles={{
           header: {
@@ -65,7 +65,7 @@ const Recipes = () => {
         centered
       >
         <CreateRecipeForm close={close} />
-      </Modal>
+      </Modal> */}
 
       <Button
         variant="default"

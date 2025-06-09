@@ -32,6 +32,23 @@ export const useRecipes = () => {
     },
   });
 
+  const removeRecipe = useMutation({
+    mutationFn: recipeService.deleteRecipe,
+
+    onSuccess: (deletedRecipe) => {
+      queryClient.invalidateQueries({
+        queryKey: ["recipes"],
+      });
+
+      toast.success("Recipe successfully removed from your cook book!");
+    },
+
+    onError: (error) => {
+      console.error("Failed to delete recipe: ", error);
+      toast.error("Failed to delete recipe. Please try again");
+    },
+  });
+
   return {
     recipeQuery,
     addRecipe,

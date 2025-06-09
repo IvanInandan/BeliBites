@@ -17,8 +17,8 @@ const updateRecipe = async (recipe, id) => {
 };
 
 const deleteRecipe = async (id) => {
-  //const response = await apiClient.post(`${baseUrl}/:${id}`)
-  //return response.data
+  const response = await apiClient.delete(`${baseUrl}/${id}`);
+  return response.data;
 };
 
 export default { getAllRecipes, createRecipe, updateRecipe, deleteRecipe };
