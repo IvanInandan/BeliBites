@@ -2,8 +2,11 @@ import axios from "axios";
 
 let token = null;
 
+// Use the env variable, fallback to "/api" (in case env var is missing)
+const baseURL = import.meta.env.VITE_API_BASE_URL || "/api";
+
 const apiClient = axios.create({
-  baseURL: "/api",
+  baseURL,
 });
 
 apiClient.interceptors.request.use((config) => {
