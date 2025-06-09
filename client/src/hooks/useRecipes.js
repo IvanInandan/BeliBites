@@ -13,6 +13,7 @@ export const useRecipes = () => {
     queryFn: recipeService.getAllRecipes,
   });
 
+  // Create recipe mutation
   const addRecipe = useMutation({
     mutationFn: recipeService.createRecipe,
 

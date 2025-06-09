@@ -2,61 +2,24 @@ import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import CreateRecipeForm from "./CreateRecipeForm";
 import { useNavigate } from "react-router-dom";
+import { useRecipes } from "../../hooks/useRecipes";
 
 const Recipes = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
 
-  const recipes = [
-    {
-      name: "Ramen",
-      description:
-        "This will be the creamiest, best darn ramen you've ever had in your life. Trust me",
-      prepTime: 5,
-      cookTime: 30,
-      ingredients: ["Noodles, Egg, Meat"],
-      steps: [
-        "First boil water",
-        "Then insert noodles into boiling water",
-        "Stir well for 10 minutes",
-        "Crack egg",
-        "Enjoy!",
-      ],
-      servings: 2,
-      imageUrl: "",
-      tags: [],
-      difficulty: "",
-    },
+  const { recipeQuery } = useRecipes();
 
-    {
-      name: "Grilled Cheese Sandwich",
-      description: "You like cheese? You'll love this then.",
-      ingredients: ["Sourdough Bread", "Cheese", "Sriracha"],
-      steps: [
-        "Throw butter on skillet",
-        "Wait for butter to brown and place bread slices onto pan",
-        "Insert cheese",
-        "Melt and enjoy",
-      ],
-      cookTime: 10,
-      prepTime: 20,
-      imageUrl: "",
-      tags: [],
-      difficulty: "",
-    },
+  if (recipeQuery.isLoading) {
+    return <div>Loading recipes...</div>;
+  }
 
-    {
-      name: "Eggs",
-      description: "What else needs to be said, they're eggs",
-      ingredients: ["Eggs"],
-      steps: ["Throw an egg on the pan you doofus"],
-      cookTime: 5,
-      prepTime: 0,
-      imageUrl: "",
-      tags: [],
-      difficulty: "",
-    },
-  ];
+  if (recipeQuery.isError) {
+    return <div>Error: {recipeQuery.error.message}</div>;
+  }
+
+  const recipes = recipeQuery.data.recipes;
+  console.log(recipes);
 
   return (
     <div>
@@ -65,12 +28,10 @@ const Recipes = () => {
       {recipes.map((item, index) => {
         return (
           <div key={index} className="p-4 bg-blue-100 rounded mb-2">
-            <h1>Name: {item.name}</h1>
+            <h1>Name: {item.title}</h1>
             <p>Description: {item.description}</p>
             <p>Prep time: {item.prepTime} minutes</p>
             <p>Cook time: {item.cookTime} minutes</p>
-            <p>Ingredients: {item.ingredients}</p>
-            <p>Steps: {item.steps}</p>
           </div>
         );
       })}
