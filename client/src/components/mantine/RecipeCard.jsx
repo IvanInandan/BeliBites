@@ -17,9 +17,6 @@ const RecipeCard = ({ recipe, onView, onVote, onDelete, onEdit }) => {
     </Badge>
   ));
 
-  console.log(recipe.tags);
-  console.log(tags);
-
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>
       <Card.Section className={classes.section} mt="md">

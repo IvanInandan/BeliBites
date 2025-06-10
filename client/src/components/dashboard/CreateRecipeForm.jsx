@@ -15,6 +15,8 @@ import Control from "../mantine/Control";
 import DragList from "../mantine/DragList";
 import Checkbox from "../mantine/Checkbox";
 import Attachment from "../mantine/Attachment";
+import IngredientInput from "../mantine/IngredientInput";
+import StepInput from "../mantine/StepInput";
 
 import { useRecipes } from "../../hooks/useRecipes";
 
@@ -41,7 +43,11 @@ const CreateRecipeForm = () => {
   const [materials, setMaterials] = useState([]);
 
   // For adding ingredients
-  const [newIngredient, setNewIngredient] = useState("");
+  const [newIngredient, setNewIngredient] = useState({
+    quantity: "",
+    unit: "",
+    name: "",
+  });
   const [newIngredientVisible, setNewIngredientVisible] = useState(false);
   const newIngredientRef = useRef(null);
   const [ingredients, setIngredients] = useState([]);
@@ -307,31 +313,34 @@ const CreateRecipeForm = () => {
           </ul>
 
           {newIngredientVisible && (
-            <TextInput
+            <IngredientInput
               ref={newIngredientRef}
-              placeholder="Penne Gorgonzola with Sea King Meat"
-              value={newIngredient}
-              onChange={(event) => {
-                setNewIngredient(event.target.value);
+              ingredient={newIngredient}
+              onAdd={() => {
+                const { quantity, unit, name } = newIngredient;
+                console.log(newIngredient);
+
+                if (!quantity || !unit || !name)
+                  return toast.error("Fill in all fields");
+
+                const entry = `${quantity} ${unit} ${name}`;
+
+                if (ingredient.includes(entry))
+                  return toast.error("Ingredient already exists");
+
+                setIngredients((prev) => [...prev, newIngredient]);
+                setNewIngredient({ quantity: "", unit: "", name: "" });
               }}
-              onBlur={() => {
-                setNewIngredient("");
+              onCancel={() => {
                 setNewIngredientVisible(false);
+                setNewIngredient({
+                  quantity: "",
+                  unit: "",
+                  name: "",
+                });
               }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && newIngredient.trim() !== "") {
-                  if (!ingredients.includes(newIngredient)) {
-                    setIngredients((prev) => [...prev, newIngredient]);
-                    setNewIngredient("");
-                  } else toast.error("Ingredient already exists");
-                }
-                if (event.key === "Escape") {
-                  setNewIngredient("");
-                  setNewIngredientVisible(false);
-                }
-              }}
-              className=""
-              required
+              setIngredient={setNewIngredient}
+              handleFocus={handleFocus}
             />
           )}
 
@@ -353,20 +362,14 @@ const CreateRecipeForm = () => {
             Steps <span className="text-red-500">*</span>
           </label>
           <DragList data={steps} updateData={setSteps} />
+
           {newStepVisible && (
-            <TextInput
+            <StepInput
               ref={newStepRef}
-              placeholder="Penne Gorgonzola with Sea King Meat"
-              value={newStep}
-              onChange={(event) => {
-                setNewStep(event.target.value);
-              }}
-              onBlur={() => {
-                setNewStep("");
-                setNewStepVisible(false);
-              }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" && newStep.trim() !== "") {
+              newStep={newStep}
+              setNewStep={setNewStep}
+              onAdd={() => {
+                if (newStep.trim() !== "") {
                   if (!steps.some((step) => step.description === newStep)) {
                     setSteps((prev) => [
                       ...prev,
@@ -375,14 +378,14 @@ const CreateRecipeForm = () => {
                     setNewStep("");
                   } else toast.error("Step already exists");
                 }
-
-                if (event.key === "Escape") {
-                  setNewStep("");
-                  setNewStepVisible(false);
-                }
               }}
-              className=""
-              required
+              onCancel={() => {
+                setNewStep("");
+                setNewStepVisible(false);
+              }}
+              onBlur={() => {
+                if (newStep.length === 0) setNewStepVisible(false);
+              }}
             />
           )}
 

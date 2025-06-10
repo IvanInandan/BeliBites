@@ -21,7 +21,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <QueryClientProvider client={queryClient}>
       <Router>
-        <MantineProvider defaultColorScheme="dark">
+        <MantineProvider
+          defaultColorScheme="dark"
+          theme={{ primaryColor: "blue" }}
+        >
           <App />
         </MantineProvider>
       </Router>
