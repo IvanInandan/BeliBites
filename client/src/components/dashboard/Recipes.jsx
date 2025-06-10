@@ -1,6 +1,7 @@
 import { Button, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import CreateRecipeForm from "./CreateRecipeForm";
+import RecipeCard from "../mantine/RecipeCard";
 import { useNavigate } from "react-router-dom";
 import { useRecipes } from "../../hooks/useRecipes";
 
@@ -30,23 +31,17 @@ const Recipes = () => {
     <div>
       <p className="text-7xl">Here are your recipes chef!</p>
 
-      {recipes.map((recipe, index) => {
-        return (
-          <div key={index} className="p-4 bg-blue-100 rounded mb-2">
-            <h1>Name: {recipe.title}</h1>
-            <p>Description: {recipe.description}</p>
-            <p>Prep time: {recipe.prepTime} minutes</p>
-            <p>Cook time: {recipe.cookTime} minutes</p>
-            <Button
-              onClick={() => {
-                deleteRecipe(recipe);
-              }}
-            >
-              Delete
-            </Button>
+      <div className="flex flex-wrap items-center">
+        {recipes.map((recipe) => (
+          <div className="p-10 min-w-min max-w-xs">
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              onDelete={() => deleteRecipe(recipe)}
+            />
           </div>
-        );
-      })}
+        ))}
+      </div>
 
       {/* <Modal
         zIndex={1000}
