@@ -95,6 +95,7 @@ const CreateRecipeForm = () => {
       !visibility
     ) {
       toast.error("Please enter all required fields");
+      return;
     }
 
     const recipe = {
@@ -113,6 +114,8 @@ const CreateRecipeForm = () => {
 
     addRecipe.mutate(recipe);
   };
+
+  console.log(newIngredient);
 
   return (
     <div className="h-auto w-full flex flex-col justify-center items-center">
@@ -297,12 +300,14 @@ const CreateRecipeForm = () => {
           <ul className="list-disc pl-5">
             {ingredients.map((ingredient) => {
               return (
-                <div className="flex gap-1 group" key={ingredient}>
-                  <li>{ingredient}</li>
+                <div className="flex gap-1 group" key={ingredient.name}>
+                  <li>
+                    {ingredient.quantity} {ingredient.unit} {ingredient.name}
+                  </li>
                   <IconCircleMinus
                     onClick={() => {
                       setIngredients((prev) =>
-                        prev.filter((item) => item != ingredient)
+                        prev.filter((item) => item.name != ingredient.name)
                       );
                     }}
                     className="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity transition-translate duration-300 hover:cursor-pointer"
@@ -316,6 +321,7 @@ const CreateRecipeForm = () => {
             <IngredientInput
               ref={newIngredientRef}
               ingredient={newIngredient}
+              setIngredient={setNewIngredient}
               onAdd={() => {
                 const { quantity, unit, name } = newIngredient;
                 console.log(newIngredient);
@@ -323,9 +329,13 @@ const CreateRecipeForm = () => {
                 if (!quantity || !unit || !name)
                   return toast.error("Fill in all fields");
 
-                const entry = `${quantity} ${unit} ${name}`;
-
-                if (ingredient.includes(entry))
+                if (
+                  ingredients.some(
+                    (ingredient) =>
+                      ingredient.name.trim().toLowerCase() ===
+                      newIngredient.name.trim().toLowerCase()
+                  )
+                )
                   return toast.error("Ingredient already exists");
 
                 setIngredients((prev) => [...prev, newIngredient]);
@@ -339,7 +349,6 @@ const CreateRecipeForm = () => {
                   name: "",
                 });
               }}
-              setIngredient={setNewIngredient}
               handleFocus={handleFocus}
             />
           )}

@@ -1,3 +1,5 @@
+const materialOptions = [];
+
 const unitOptions = [
   // Volume (US)
   { value: "teaspoon", label: "Teaspoon" },

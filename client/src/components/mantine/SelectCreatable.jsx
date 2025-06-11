@@ -1,3 +1,11 @@
+// Search vs Value:
+// Search - Current text input that user is typing; gets updated in real-time with input
+// Value - Only updates when user selects an option or creates a new one
+
+// Value vs Label:
+// Value - Internal ID or Key (ie: us)
+// Label - Human readable text shown in UI (ie: United States of America)
+
 import { useState, useEffect, useRef } from "react";
 import { Combobox, InputBase, useCombobox } from "@mantine/core";
 
@@ -5,7 +13,8 @@ export default function SelectCreatable({
   label,
   placeholder,
   listOptions,
-  onBlur,
+  value,
+  onChange,
 }) {
   const combobox = useCombobox({
     onDropdownClose: () => {
@@ -14,27 +23,26 @@ export default function SelectCreatable({
     },
   });
 
-  const [data, setData] = useState(listOptions);
-  const [value, setValue] = useState("");
+  const [data, setData] = useState(listOptions); // Stores passed in array of objects (value: "", label: "") as drop-down list
   const [search, setSearch] = useState("");
   const [showAllOnOpen, setShowAllOnOpen] = useState(false);
   const inputRef = useRef();
 
-  // Case-insensitive match
-  const normalizedSearch = search.trim().toLowerCase();
+  const normalizedSearch = search.trim().toLowerCase(); // When typing into field, grabs text and returns all lowercase
   const exactOptionMatch = data.some(
     (item) => item.label.toLowerCase() === normalizedSearch
-  );
+  ); // Sets to true when exact match is found between typed input and item.label found in list
 
-  // Show all options if showAllOnOpen=true, else filter normally
+  // If text field is blank, show all options. Else, filter data that contains text input as 'substring' and return those items.
   const filteredOptions = showAllOnOpen
     ? data
     : data.filter((item) =>
         item.label.toLowerCase().includes(normalizedSearch)
       );
 
+  //  For each item in filtered options, generate it as a dropdown choice
   const options = filteredOptions.map((item) => (
-    <Combobox.Option value={item.value} key={item.value}>
+    <Combobox.Option value={item.label} key={item.label}>
       {item.label}
     </Combobox.Option>
   ));
@@ -42,18 +50,22 @@ export default function SelectCreatable({
   // Select first match on Enter key
   useEffect(() => {
     const handleEnter = (e) => {
+      console.log("Search: ", search);
+      console.log("Value: ", value);
       if (e.key === "Enter" && combobox.dropdownOpened) {
-        if (!exactOptionMatch && normalizedSearch.length > 0) {
+        if (!exactOptionMatch && filteredOptions.length === 0) {
+          // If no match is found and no choices exist in the dropdown (ex: done filtering through whole list)
+          // Then --> create new list option
           const newOption = {
             value: normalizedSearch.replace(/\s+/g, "_"),
             label: search,
           };
-          setData((current) => [...current, newOption]);
-          setValue(newOption.value);
+          setData((current) => [...current, newOption]); // Append new list option to array of data
+          onChange(newOption.label);
           setSearch(newOption.label);
         } else if (filteredOptions.length > 0) {
-          const selected = filteredOptions[0];
-          setValue(selected.value);
+          const selected = filteredOptions[0]; // Select top option of displayed dropdown choices
+          onChange(selected.label);
           setSearch(selected.label);
         }
 
@@ -78,11 +90,11 @@ export default function SelectCreatable({
             label: search,
           };
           setData((current) => [...current, newOption]);
-          setValue(newOption.value);
+          onChange(newOption.label);
           setSearch(newOption.label);
         } else {
           const selected = data.find((d) => d.value === val);
-          setValue(val);
+          onChange(val);
           setSearch(selected?.label ?? val);
         }
 
@@ -98,7 +110,7 @@ export default function SelectCreatable({
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  setValue("");
+                  onChange("");
                   setSearch("");
                   combobox.resetSelectedOption();
                 }}
