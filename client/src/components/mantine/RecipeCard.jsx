@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { IconHeart } from "@tabler/icons-react";
 import {
   ActionIcon,
@@ -10,7 +11,16 @@ import {
 } from "@mantine/core";
 import classes from "./RecipeCard.module.scss";
 
-const RecipeCard = ({ recipe, onView, onVote, onDelete, onEdit }) => {
+import { useFavorites } from "../../hooks/useFavorites";
+
+const RecipeCard = ({ recipe, onView, onFavorite, onDelete, onEdit }) => {
+  const user = useSelector((state) => state.user);
+
+  const { isFavoritedQuery, favoriteCountQuery, addFavorite, removeFavorite } =
+    useFavorites({ userId: user.id, recipeId: recipe.id });
+
+  console.log(user.id, recipe.id);
+
   const tags = recipe.tags.map((tag) => (
     <Badge variant="light" key={tag}>
       {tag}
@@ -50,7 +60,12 @@ const RecipeCard = ({ recipe, onView, onVote, onDelete, onEdit }) => {
           <Button radius="md" style={{ flex: 1 }}>
             View recipe
           </Button>
-          <ActionIcon variant="default" radius="md" size={36}>
+          <ActionIcon
+            variant="default"
+            radius="md"
+            size={36}
+            onClick={onFavorite}
+          >
             <IconHeart className={classes.like} stroke={1.5} />
           </ActionIcon>
         </Group>

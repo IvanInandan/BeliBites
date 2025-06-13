@@ -1,12 +1,14 @@
 import { Button, Modal } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useRadialMove } from "@mantine/hooks";
 import CreateRecipeForm from "./CreateRecipeForm";
 import RecipeCard from "../mantine/RecipeCard";
 import { useNavigate } from "react-router-dom";
+
+// Import custom hooks
 import { useRecipes } from "../../hooks/useRecipes";
 
 const Recipes = () => {
-  const [opened, { open, close }] = useDisclosure(false);
+  //const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
 
   const { recipeQuery, removeRecipe } = useRecipes();
@@ -33,12 +35,8 @@ const Recipes = () => {
 
       <div className="flex flex-wrap items-center">
         {recipes.map((recipe) => (
-          <div className="p-10 min-w-min max-w-xs">
-            <RecipeCard
-              key={recipe.id}
-              recipe={recipe}
-              onDelete={() => deleteRecipe(recipe)}
-            />
+          <div key={recipe.id} className="p-10 min-w-min max-w-xs">
+            <RecipeCard recipe={recipe} onDelete={() => deleteRecipe(recipe)} />
           </div>
         ))}
       </div>
