@@ -2,7 +2,9 @@ import { apiClient } from "./apiClient";
 const baseUrl = "/favorites";
 
 const getFavoritesByUser = async (userId) => {
-  const response = await apiClient.get(`${baseUrl}?user=${userId}`);
+  const response = await apiClient.get(`${baseUrl}`, {
+    user: userId,
+  });
   return response.data;
 };
 
@@ -14,14 +16,18 @@ const checkIfFavorited = async (userId, recipeId) => {
 };
 
 const getFavoriteCount = async (recipeId) => {
-  const response = await apiClient.get(`${baseUrl}/count?recipe=${recipeId}`);
+  const response = await apiClient.get(`${baseUrl}/count`, {
+    params: { recipe: recipeId },
+  });
   return response.data;
 };
 
 const addFavorite = async ({ userId, recipeId }) => {
   const response = await apiClient.post(baseUrl, {
-    user: userId,
-    recipe: recipeId,
+    params: {
+      user: userId,
+      recipe: recipeId,
+    },
   });
   return response.data;
 };
