@@ -45,7 +45,7 @@ recipeRouter.delete("/:id", tokenDecoder, async (request, response, next) => {
         .json({ error: `Recipe with ID ${request.params.id} was not found` });
     }
 
-    const recipeUserId = request.user.id.toString();
+    const recipeUserId = recipe.user.id.toString();
     const tokenUserId = request.user.id;
 
     if (recipeUserId !== tokenUserId) {
